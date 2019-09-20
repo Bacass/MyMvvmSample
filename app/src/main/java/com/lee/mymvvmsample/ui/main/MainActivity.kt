@@ -31,7 +31,9 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         if (savedInstanceState == null) {
             addFragment(HomeFragment(), "HomeFragment")
         }
+
         setEvent()
+        Timber.d("Lee processVersion()")
         viewModel.processVersion()
     }
 

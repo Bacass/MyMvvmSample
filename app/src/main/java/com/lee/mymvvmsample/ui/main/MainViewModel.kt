@@ -1,13 +1,13 @@
 package com.lee.mymvvmsample.ui.main
 
 import com.lee.mymvvmsample.BuildConfig
-import com.lee.mymvvmsample.network.SampleRepository
-import com.lee.mymvvmsample.network.SampleResult
+import com.lee.mymvvmsample.network.NetworkRepository
+import com.lee.mymvvmsample.network.NetworkResult
 import com.lee.mymvvmsample.common.BaseViewModel
 import com.lee.mymvvmsample.common.utils.SingleLiveEvent
 import kotlinx.coroutines.launch
 
-class MainViewModel(private val repository: SampleRepository): BaseViewModel() {
+class MainViewModel(private val repository: NetworkRepository): BaseViewModel() {
     sealed class LoginResult {
         object Success : LoginResult()
         class Fail(val errorMsg: String) : LoginResult()
@@ -22,14 +22,14 @@ class MainViewModel(private val repository: SampleRepository): BaseViewModel() {
         uiScope.launch {
             repository.serviceVersion().run {
                 when (this) {
-                    is SampleResult.Success -> {
+                    is NetworkResult.Success -> {
                         if (response?.version == BuildConfig.VERSION_NAME)
                             loginResultEvent.sendEvent(LoginResult.Success)
                         else
                             loginResultEvent.sendEvent(LoginResult.Update(response?.version?: ""))
                         return@launch
                     }
-                    is SampleResult.Error -> {
+                    is NetworkResult.Error -> {
                         loginResultEvent.sendEvent(LoginResult.NetworkError)
                         return@launch
                     }

@@ -6,7 +6,7 @@ import retrofit2.http.Body
 import retrofit2.http.Headers
 import retrofit2.http.POST
 
-interface SampleService {
+interface NetworkService {
     // 앱 세션
     @Headers("Content-Type: application/json")
     @POST("api/service/version")

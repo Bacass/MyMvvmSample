@@ -9,8 +9,8 @@ import com.google.gson.JsonSyntaxException
 import com.lee.mymvvmsample.BuildConfig
 import com.lee.mymvvmsample.ui.main.MainViewModel
 import com.lee.mymvvmsample.network.AddCookieInterceptor
-import com.lee.mymvvmsample.network.SampleRepository
-import com.lee.mymvvmsample.network.SampleService
+import com.lee.mymvvmsample.network.NetworkRepository
+import com.lee.mymvvmsample.network.NetworkService
 import com.lee.mymvvmsample.network.ReceivedCookieInterceptor
 import com.lee.mymvvmsample.ui.main.gallery.GalleryViewModel
 import com.lee.mymvvmsample.ui.main.home.HomeViewModel
@@ -38,7 +38,7 @@ class MyApplication: Application() {
     }
 
     private val appModules = module {
-        single<SampleService> {
+        single<NetworkService> {
             Retrofit.Builder().baseUrl(BuildConfig.SERVER_HTTP_URL).client(OkHttpClient.Builder().apply {
                 connectTimeout(30, TimeUnit.SECONDS)
                 writeTimeout(30, TimeUnit.SECONDS)
@@ -63,10 +63,11 @@ class MyApplication: Application() {
         }
 
         single {
-            SampleRepository(get())
+            NetworkRepository(get())
         }
 
-        single { MainViewModel(get()) } // 싱글톤 뷰모델 생성.
+//        single { MainViewModel(get()) } // 싱글톤 뷰모델 생성.
+        viewModel { MainViewModel(get()) }
         viewModel { HomeViewModel(get()) }
         viewModel { SendViewModel(get()) }
         viewModel { ShareViewModel(get()) }

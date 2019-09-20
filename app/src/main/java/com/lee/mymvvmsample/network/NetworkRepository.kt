@@ -8,34 +8,34 @@ import kotlinx.coroutines.withContext
 import okhttp3.ResponseBody
 import retrofit2.Response
 
-class SampleRepository(private val service: SampleService) {
+class NetworkRepository(private val service: NetworkService) {
 
     // Version Check | service/version
-    suspend fun serviceVersion(): SampleResult<VersionResponse> = withContext(Dispatchers.IO) {
+    suspend fun serviceVersion(): NetworkResult<VersionResponse> = withContext(Dispatchers.IO) {
         callResponse { service.serviceVersion(hashMapOf("platform" to "android")) }
     }
 
 
-    private fun parseErrorResult(body: ResponseBody): SampleResult.Error {
+    private fun parseErrorResult(body: ResponseBody): NetworkResult.Error {
         try {
             val element = JsonParser().parse(body.string()).asJsonObject
             val code = if (element.has("code")) element.get("code").asString else null
             val message = if (element.has("message")) element.get("message").asString else null
-            return SampleResult.Error(code, message)
+            return NetworkResult.Error(code, message)
         } catch (e: Exception) {
         }
-        return SampleResult.Error(null, null)
+        return NetworkResult.Error(null, null)
     }
 
-    private suspend fun <T : Any> callResponse(call: suspend () -> Response<T>): SampleResult<T> {
+    private suspend fun <T : Any> callResponse(call: suspend () -> Response<T>): NetworkResult<T> {
         val response = call.invoke()
         if (response.isSuccessful) {
-            return SampleResult.Success(response.body())
+            return NetworkResult.Success(response.body())
         } else {
             response.errorBody()?.let { error ->
                 return parseErrorResult(error)
             } ?: run {
-                return SampleResult.Error(null, null)
+                return NetworkResult.Error(null, null)
             }
         }
     }
