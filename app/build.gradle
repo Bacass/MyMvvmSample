@@ -1,0 +1,93 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "com.lee.mymvvmsample"
+        minSdkVersion 26
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            buildConfigField("String", "SERVER_HTTP_URL", "\"https://app.picknpick.world/\"")
+            // 실서버도메인
+            buildConfigField("String", "SERVER_HTTPS_URL", "\"https://app.picknpick.world/\"")
+            // 실서버도메인
+            buildConfigField("String", "IMAGE_HEAD_URL", "\"https://s3-ap-northeast-2.amazonaws.com/ajl-bucket-prod/\"")
+            // 실서버도메인
+
+            buildConfigField("boolean", "VERSION_CHECK", "true")   // 버전체크
+            buildConfigField("boolean", "SHOW_LOG", "true")   // 로그 표시
+        }
+        debug {
+            buildConfigField("String", "SERVER_HTTP_URL", "\"http://dev-app.isdgn.com/\"") // 개발도메인
+            buildConfigField("String", "SERVER_HTTPS_URL", "\"https://dev-app.isdgn.com/\"")
+            // 개발도메인
+            buildConfigField("String", "IMAGE_HEAD_URL", "\"http://ajl-bucket-1.s3-ap-northeast-1.amazonaws.com/\"")
+            // 개발도메인
+
+            buildConfigField("boolean", "VERSION_CHECK", "false")   // 버전체크
+            buildConfigField("boolean", "SHOW_LOG", "true")   // 로그 표시
+        }
+    }
+    compileOptions {
+        // java.lang.BootstrapMethodError: Exception from call site #4 bootstrap method
+        // Retrofit 에서 BootstrapMethodError 가 발생했다.
+        // 구글 검색후 compileOption 을 추가해서 에러를 해결했다.
+        targetCompatibility = "8"
+        sourceCompatibility = "8"
+    }
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+    dataBinding {
+        enabled = true
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.core:core-ktx:1.1.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'androidx.navigation:navigation-fragment:2.1.0'
+    implementation 'androidx.navigation:navigation-ui:2.1.0'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.1.0'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.1.0'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    // Networking
+    implementation "com.squareup.retrofit2:retrofit:2.6.0"
+    implementation "com.squareup.retrofit2:converter-gson:2.6.0"
+    implementation 'com.squareup.retrofit2:converter-scalars:2.6.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.14.2'
+    implementation 'com.squareup.okhttp3:okhttp-urlconnection:3.14.2'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.14.2'
+    implementation 'com.google.code.gson:gson:2.8.5'
+
+    // kotpref
+    implementation "com.chibatching.kotpref:kotpref:2.8.0"
+
+    // Koin
+    implementation "org.koin:koin-androidx-scope:2.0.1"
+    implementation "org.koin:koin-androidx-viewmodel:2.0.1"
+
+    // Image
+    implementation "com.github.bumptech.glide:glide:4.9.0"
+
+    // Timber Log Library
+    implementation 'com.jakewharton.timber:timber:4.7.1'
+}
