@@ -44,13 +44,13 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                     Timber.e("LoginResult.Success")
                 }
                 is MainViewModel.LoginResult.Update -> {
-                    Timber.e("LoginResult.Update")
+                    Timber.e("LoginResult.Update ${it.newVersion}")
                 }
                 is MainViewModel.LoginResult.NetworkError -> {
                     Timber.e("LoginResult.NetworkError")
                 }
                 is MainViewModel.LoginResult.ServerError -> {
-                    Timber.e("LoginResult.ServerError")
+                    Timber.e("LoginResult.ServerError ${it.errorMsg}")
                 }
                 else -> {
                     Timber.e("LoginResult.Success")
