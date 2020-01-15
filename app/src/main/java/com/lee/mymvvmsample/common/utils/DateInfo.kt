@@ -151,8 +151,8 @@ open class DateInfo {
     open fun getIntToTime(param: Int): String {
         var minute = param / 60 % 60
         var second = param % 60
-        var mMinute = if (minute < 10) "0$minute" else minute
-        var mSecond = if (second < 10) "0$second" else second
+        var mMinute = if (minute < 10) "0$minute" else minute.toString()
+        var mSecond = if (second < 10) "0$second" else second.toString()
 
         return "$mMinute:$mSecond"
     }

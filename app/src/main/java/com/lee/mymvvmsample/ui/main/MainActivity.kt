@@ -1,7 +1,9 @@
 package com.lee.mymvvmsample.ui.main
 
 import android.os.Bundle
+import android.os.Handler
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.core.view.GravityCompat
 import androidx.lifecycle.Observer
 import com.google.android.material.navigation.NavigationView
@@ -21,6 +23,7 @@ import timber.log.Timber
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
     private val viewModel: MainViewModel by viewModel()
 
+    private var mCloseApp: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -81,5 +84,18 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    override fun onBackPressed() {
+        if (!mCloseApp) {
+            mCloseApp = true
+            Toast.makeText(this, "종료하시려면 한번 더 누르세요.", Toast.LENGTH_SHORT).show()
+            Handler().postDelayed({
+                mCloseApp = false
+            }, 1000)
+            
+        } else {
+            finishActivity()
+        }
     }
 }
