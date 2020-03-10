@@ -45,19 +45,41 @@ class MyApplication: Application() {
                 readTimeout(30, TimeUnit.SECONDS)
                 addInterceptor(AddCookieInterceptor())
                 addInterceptor(ReceivedCookieInterceptor())
-                addInterceptor(HttpLoggingInterceptor(HttpLoggingInterceptor.Logger {
-                    if (!it.startsWith("{") && !it.startsWith("[")) {
-                        Timber.tag("OkHttp").d(it)
-                        return@Logger
+                /**
+                 * 200309
+                 * addInterceptor 을 수정함.
+                 * okhttp 4.3.1 버전으로 수정되면서 아래 내용을 수정했다.
+                 * 기존 내용은 주석처리함.
+                 */
+                addInterceptor(HttpLoggingInterceptor(object : HttpLoggingInterceptor.Logger {
+                    override fun log(message: String) {
+                        if (!message.startsWith("{") && !message.startsWith("[")) {
+                            Timber.tag("OkHttp").d(message)
+                            return
+                        }
+                        try {
+                            Timber.tag("OkHttp").d(GsonBuilder().setPrettyPrinting().create().toJson(JsonParser().parse(message)))
+                        } catch (m: JsonSyntaxException) {
+                            Timber.tag("OkHttp").d(message)
+                        }
                     }
-                    try {
-                        Timber.tag("OkHttp").d(
-                            GsonBuilder().setPrettyPrinting().create().toJson(
-                                JsonParser().parse(it)))
-                    } catch (m: JsonSyntaxException) {
-                        Timber.tag("OkHttp").d(it)
-                    }
-                }).apply { level = HttpLoggingInterceptor.Level.BODY })
+
+                }).apply {
+                    level = HttpLoggingInterceptor.Level.BODY
+                })
+//                addInterceptor(HttpLoggingInterceptor(HttpLoggingInterceptor.Logger {
+//                    if (!it.startsWith("{") && !it.startsWith("[")) {
+//                        Timber.tag("OkHttp").d(it)
+//                        return@Logger
+//                    }
+//                    try {
+//                        Timber.tag("OkHttp").d(
+//                            GsonBuilder().setPrettyPrinting().create().toJson(
+//                                JsonParser().parse(it)))
+//                    } catch (m: JsonSyntaxException) {
+//                        Timber.tag("OkHttp").d(it)
+//                    }
+//                }).apply { level = HttpLoggingInterceptor.Level.BODY })
             }.build()).addConverterFactory(ScalarsConverterFactory.create()).addConverterFactory(
                 GsonConverterFactory.create()).build().create()
         }
