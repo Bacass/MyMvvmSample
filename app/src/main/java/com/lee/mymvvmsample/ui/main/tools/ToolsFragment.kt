@@ -20,7 +20,7 @@ class ToolsFragment : Fragment() {
     ): View? {
         val root = inflater.inflate(R.layout.fragment_tools, container, false)
         val textView: TextView = root.findViewById(R.id.text_tools)
-        viewModel.text.observe(this, Observer {
+        viewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
         return root
