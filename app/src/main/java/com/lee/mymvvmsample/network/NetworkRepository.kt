@@ -2,19 +2,14 @@ package com.lee.mymvvmsample.network
 
 import com.google.gson.JsonParser
 import com.lee.mymvvmsample.network.model.ListData
-import com.lee.mymvvmsample.network.model.VersionResponse
+import com.lee.mymvvmsample.network.model.RequestImageParam
+import com.lee.mymvvmsample.network.model.RequestVideoParam
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.ResponseBody
 import retrofit2.Response
 
 class NetworkRepository(private val service: NetworkService) {
-
-    // Version Check | service/version
-    suspend fun serviceVersion(): NetworkResult<VersionResponse> = withContext(Dispatchers.IO) {
-        callResponse { service.serviceVersion(hashMapOf("platform" to "android")) }
-    }
-
 
     private fun parseErrorResult(body: ResponseBody): NetworkResult.Error {
         try {
@@ -48,6 +43,19 @@ class NetworkRepository(private val service: NetworkService) {
     private suspend fun <T : Any> callList(call: suspend () -> Response<ListData<T>>): ListData<T> {
         val response = call.invoke()
         return response.body() ?: ListData()
+    }
+
+
+
+
+    // Search Image
+    suspend fun searchImage(params: RequestImageParam): NetworkResult<Void> = withContext(Dispatchers.IO) {
+        callResponse { service.searchImage(params.key!!, params.q!!, params.image_type!!, params.page!!, params.per_page!!) }
+    }
+
+    // Search Video
+    suspend fun searchVideo(params: RequestVideoParam): NetworkResult<Void> = withContext(Dispatchers.IO) {
+        callResponse { service.searchVideo(params.key!!, params.q!!, params.page!!, params.per_page!!) }
     }
 
 }

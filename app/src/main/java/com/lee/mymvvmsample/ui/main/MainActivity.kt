@@ -36,8 +36,6 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         }
 
         setEvent()
-        Timber.d("Lee processVersion()")
-        viewModel.processVersion()
     }
 
     private fun setEvent() {

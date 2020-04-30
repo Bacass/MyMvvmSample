@@ -1,14 +1,27 @@
 package com.lee.mymvvmsample.network
 
-import com.lee.mymvvmsample.network.model.VersionResponse
+import okhttp3.ResponseBody
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.Headers
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface NetworkService {
-    // 앱 세션
-    @Headers("Content-Type: application/json")
-    @POST("api/service/version")
-    suspend fun serviceVersion(@Body params: HashMap<String, Any>): Response<VersionResponse>
+
+    // 이미지 검색
+    @GET("api/")
+    suspend fun searchImage(
+        @Query("key") key: String,
+        @Query("q") q: String,
+        @Query("image_type") image_type: String,
+        @Query("page") page: Int,
+        @Query("per_page") per_page: Int
+    ): Response<Void>
+
+    // 동영상 검색
+    @GET("api/videos/")
+    suspend fun searchVideo(
+        @Query("key") key: String,
+        @Query("q") q: String,
+        @Query("page") page: Int,
+        @Query("per_page") per_page: Int
+    ): Response<Void>
 }

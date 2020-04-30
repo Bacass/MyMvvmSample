@@ -67,19 +67,6 @@ class MyApplication: Application() {
                 }).apply {
                     level = HttpLoggingInterceptor.Level.BODY
                 })
-//                addInterceptor(HttpLoggingInterceptor(HttpLoggingInterceptor.Logger {
-//                    if (!it.startsWith("{") && !it.startsWith("[")) {
-//                        Timber.tag("OkHttp").d(it)
-//                        return@Logger
-//                    }
-//                    try {
-//                        Timber.tag("OkHttp").d(
-//                            GsonBuilder().setPrettyPrinting().create().toJson(
-//                                JsonParser().parse(it)))
-//                    } catch (m: JsonSyntaxException) {
-//                        Timber.tag("OkHttp").d(it)
-//                    }
-//                }).apply { level = HttpLoggingInterceptor.Level.BODY })
             }.build()).addConverterFactory(ScalarsConverterFactory.create()).addConverterFactory(
                 GsonConverterFactory.create()).build().create()
         }
