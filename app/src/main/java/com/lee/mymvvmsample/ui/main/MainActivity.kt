@@ -12,10 +12,7 @@ import com.lee.mymvvmsample.common.BaseActivity
 import com.lee.mymvvmsample.common.addFragment
 import com.lee.mymvvmsample.ui.main.gallery.GalleryFragment
 import com.lee.mymvvmsample.ui.main.home.HomeFragment
-import com.lee.mymvvmsample.ui.main.send.SendFragment
 import com.lee.mymvvmsample.ui.main.share.ShareFragment
-import com.lee.mymvvmsample.ui.main.slideshow.SlideshowFragment
-import com.lee.mymvvmsample.ui.main.tools.ToolsFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
@@ -66,17 +63,8 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             R.id.nav_gallery -> {
                 addFragment(GalleryFragment(), "GalleryFragment")
             }
-            R.id.nav_slideshow -> {
-                addFragment(SlideshowFragment(), "SlideshowFragment")
-            }
-            R.id.nav_tools -> {
-                addFragment(ToolsFragment(), "ToolsFragment")
-            }
             R.id.nav_share -> {
                 addFragment(ShareFragment(), "ShareFragment")
-            }
-            R.id.nav_send -> {
-                addFragment(SendFragment(), "SendFragment")
             }
         }
 

@@ -14,10 +14,7 @@ import com.lee.mymvvmsample.network.NetworkService
 import com.lee.mymvvmsample.network.ReceivedCookieInterceptor
 import com.lee.mymvvmsample.ui.main.gallery.GalleryViewModel
 import com.lee.mymvvmsample.ui.main.home.HomeViewModel
-import com.lee.mymvvmsample.ui.main.send.SendViewModel
 import com.lee.mymvvmsample.ui.main.share.ShareViewModel
-import com.lee.mymvvmsample.ui.main.slideshow.SlideshowViewModel
-import com.lee.mymvvmsample.ui.main.tools.ToolsViewModel
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidContext
@@ -78,10 +75,7 @@ class MyApplication: Application() {
 //        single { MainViewModel(get()) } // 싱글톤 뷰모델 생성.
         viewModel { MainViewModel(get()) }
         viewModel { HomeViewModel(get()) }
-        viewModel { SendViewModel(get()) }
         viewModel { ShareViewModel(get()) }
-        viewModel { ToolsViewModel(get()) }
-        viewModel { SlideshowViewModel(get()) }
         viewModel { GalleryViewModel(get()) }
     }
 
