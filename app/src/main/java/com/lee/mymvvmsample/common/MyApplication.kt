@@ -7,6 +7,7 @@ import com.google.gson.GsonBuilder
 import com.google.gson.JsonParser
 import com.google.gson.JsonSyntaxException
 import com.lee.mymvvmsample.BuildConfig
+import com.lee.mymvvmsample.common.utils.ImageLoader
 import com.lee.mymvvmsample.ui.main.MainViewModel
 import com.lee.mymvvmsample.network.AddCookieInterceptor
 import com.lee.mymvvmsample.network.NetworkRepository
@@ -70,6 +71,10 @@ class MyApplication: Application() {
 
         single {
             NetworkRepository(get())
+        }
+
+        single {
+            ImageLoader(get())
         }
 
 //        single { MainViewModel(get()) } // 싱글톤 뷰모델 생성.

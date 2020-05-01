@@ -3,6 +3,7 @@ package com.lee.mymvvmsample.common.utils
 import android.content.Context
 import android.content.pm.PackageInfo
 import android.os.Environment
+import android.view.WindowManager
 import com.lee.mymvvmsample.common.MyApplication
 import java.io.File
 import java.io.FileWriter
@@ -41,6 +42,12 @@ class DeviceInfo {
             } catch (e: IOException) {
                 e.printStackTrace()
             }
+        }
+
+        fun getDeviceWidth(context: Context): Int {
+            val display = (context.getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay
+
+            return display.width
         }
     }
 

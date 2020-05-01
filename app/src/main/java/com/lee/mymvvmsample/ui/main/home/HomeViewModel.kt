@@ -3,16 +3,14 @@ package com.lee.mymvvmsample.ui.main.home
 import android.text.TextUtils
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.gson.Gson
 import com.lee.mymvvmsample.R
 import com.lee.mymvvmsample.common.BaseViewModel
 import com.lee.mymvvmsample.common.utils.Constants
 import com.lee.mymvvmsample.common.utils.SingleLiveEvent
 import com.lee.mymvvmsample.network.NetworkRepository
 import com.lee.mymvvmsample.network.NetworkResult
-import com.lee.mymvvmsample.network.model.ImageObj
-import com.lee.mymvvmsample.network.model.RequestImageParam
-import com.lee.mymvvmsample.network.model.RequestVideoParam
-import com.lee.mymvvmsample.network.model.VideoObj
+import com.lee.mymvvmsample.network.model.*
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -32,8 +30,8 @@ class HomeViewModel(private val repository: NetworkRepository) : BaseViewModel()
     var etStr: String = ""
     var mPage: Int = 1
 
-    var imageListData = MutableLiveData<ImageObj>()
-    var videoListData = MutableLiveData<VideoObj>()
+    var imageListData: MutableList<ImageHits>? = mutableListOf()
+    var videoListData: MutableList<VideoHits>? = mutableListOf()
 
     /**
      * 이미지 검색 api 호출.
@@ -50,13 +48,15 @@ class HomeViewModel(private val repository: NetworkRepository) : BaseViewModel()
             repository.searchImage(params).run {
                 when (this) {
                     is NetworkResult.Success -> {
-                        imageListData.value?.total = this.response?.total!!
-                        imageListData.value?.totalHits = this.response?.totalHits
+//                        imageListData.value?.total = this.response?.total!!
+//                        imageListData.value?.totalHits = this.response?.totalHits
+//                        Timber.d("Lee imageListData.value?.total: ${Gson().toJson(imageListData.value?.total)}")
+//                        Timber.d("Lee imageListData.value?.totalHits: ${Gson().toJson(imageListData.value?.totalHits)}")
 
                         if (this.response?.hits!!.isEmpty()) {
                             searchResultEvent.sendEvent(SearchResult.Fail(""))
                         } else {
-                            imageListData.value?.hits?.addAll(this.response?.hits)
+                            imageListData?.addAll(response?.hits)
 
                             searchResultEvent.sendEvent(SearchResult.Success)
                         }
@@ -85,16 +85,13 @@ class HomeViewModel(private val repository: NetworkRepository) : BaseViewModel()
             repository.searchVideo(params).run {
                 when (this) {
                     is NetworkResult.Success -> {
-                        videoListData.value?.total = this.response?.total!!
-                        videoListData.value?.totalHits = this.response?.totalHits
-
-                        if (this.response?.hits!!.isEmpty()) {
-                            searchResultEvent.sendEvent(SearchResult.Fail(""))
-                        } else {
-                            videoListData.value?.hits?.addAll(this.response.hits)
-
-                            searchResultEvent.sendEvent(SearchResult.Success)
-                        }
+//                        if (this.response?.hits!!.isEmpty()) {
+//                            searchResultEvent.sendEvent(SearchResult.Fail(""))
+//                        } else {
+//                            imageListData?.addAll(response?.hits!!)
+//
+//                            searchResultEvent.sendEvent(SearchResult.Success)
+//                        }
                     }
                     is NetworkResult.Error -> {
                         searchResultEvent.sendEvent(SearchResult.NetworkError)
