@@ -20,7 +20,6 @@ class HomeImageAdapter(private val viewModel: HomeViewModel) :
     private val imageLoader: ImageLoader = get()
 
     private var item_list = mutableListOf<ImageHits>()
-    private var page = 1
     private var itemWidth = 150
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -57,11 +56,9 @@ class HomeImageAdapter(private val viewModel: HomeViewModel) :
     inner class ItemViewHolder(private val binding: ItemHomeBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: ImageHits, position: Int) {
-            binding.data = item
-
             binding.llContents.layoutParams = LinearLayout.LayoutParams(itemWidth, itemWidth)
 
-            imageLoader.imageLoadWithURL(item.largeImageURL, binding.ivContent)
+            imageLoader.imageLoadWithURL(item.previewURL, binding.ivContent)
         }
     }
 }
