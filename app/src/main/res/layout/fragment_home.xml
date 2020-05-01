@@ -35,7 +35,8 @@
                     android:paddingRight="20dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="100dp"
-                    android:maxLines="1"
+                    android:imeOptions="actionSearch"
+                    android:singleLine="true"
                     android:maxLength="25"
                     android:hint="검색어를 입력해주세요."
                     android:text="@={VM.etStr}"/>

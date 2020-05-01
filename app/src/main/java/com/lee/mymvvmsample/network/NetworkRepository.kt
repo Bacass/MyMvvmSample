@@ -1,9 +1,7 @@
 package com.lee.mymvvmsample.network
 
 import com.google.gson.JsonParser
-import com.lee.mymvvmsample.network.model.ListData
-import com.lee.mymvvmsample.network.model.RequestImageParam
-import com.lee.mymvvmsample.network.model.RequestVideoParam
+import com.lee.mymvvmsample.network.model.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.ResponseBody
@@ -49,12 +47,12 @@ class NetworkRepository(private val service: NetworkService) {
 
 
     // Search Image
-    suspend fun searchImage(params: RequestImageParam): NetworkResult<Void> = withContext(Dispatchers.IO) {
+    suspend fun searchImage(params: RequestImageParam): NetworkResult<ImageObj> = withContext(Dispatchers.IO) {
         callResponse { service.searchImage(params.key!!, params.q!!, params.image_type!!, params.page!!, params.per_page!!) }
     }
 
     // Search Video
-    suspend fun searchVideo(params: RequestVideoParam): NetworkResult<Void> = withContext(Dispatchers.IO) {
+    suspend fun searchVideo(params: RequestVideoParam): NetworkResult<VideoObj> = withContext(Dispatchers.IO) {
         callResponse { service.searchVideo(params.key!!, params.q!!, params.page!!, params.per_page!!) }
     }
 

@@ -9,8 +9,10 @@ import com.lee.mymvvmsample.common.utils.Constants
 import com.lee.mymvvmsample.common.utils.SingleLiveEvent
 import com.lee.mymvvmsample.network.NetworkRepository
 import com.lee.mymvvmsample.network.NetworkResult
+import com.lee.mymvvmsample.network.model.ImageObj
 import com.lee.mymvvmsample.network.model.RequestImageParam
 import com.lee.mymvvmsample.network.model.RequestVideoParam
+import com.lee.mymvvmsample.network.model.VideoObj
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -30,6 +32,9 @@ class HomeViewModel(private val repository: NetworkRepository) : BaseViewModel()
     var etStr: String = ""
     var mPage: Int = 1
 
+    var imageListData = MutableLiveData<ImageObj>()
+    var videoListData = MutableLiveData<VideoObj>()
+
     /**
      * 이미지 검색 api 호출.
      */
@@ -45,7 +50,16 @@ class HomeViewModel(private val repository: NetworkRepository) : BaseViewModel()
             repository.searchImage(params).run {
                 when (this) {
                     is NetworkResult.Success -> {
+                        imageListData.value?.total = this.response?.total!!
+                        imageListData.value?.totalHits = this.response?.totalHits
 
+                        if (this.response?.hits!!.isEmpty()) {
+                            searchResultEvent.sendEvent(SearchResult.Fail(""))
+                        } else {
+                            imageListData.value?.hits?.addAll(this.response?.hits)
+
+                            searchResultEvent.sendEvent(SearchResult.Success)
+                        }
                     }
                     is NetworkResult.Error -> {
                         searchResultEvent.sendEvent(SearchResult.NetworkError)
@@ -71,7 +85,16 @@ class HomeViewModel(private val repository: NetworkRepository) : BaseViewModel()
             repository.searchVideo(params).run {
                 when (this) {
                     is NetworkResult.Success -> {
+                        videoListData.value?.total = this.response?.total!!
+                        videoListData.value?.totalHits = this.response?.totalHits
 
+                        if (this.response?.hits!!.isEmpty()) {
+                            searchResultEvent.sendEvent(SearchResult.Fail(""))
+                        } else {
+                            videoListData.value?.hits?.addAll(this.response.hits)
+
+                            searchResultEvent.sendEvent(SearchResult.Success)
+                        }
                     }
                     is NetworkResult.Error -> {
                         searchResultEvent.sendEvent(SearchResult.NetworkError)

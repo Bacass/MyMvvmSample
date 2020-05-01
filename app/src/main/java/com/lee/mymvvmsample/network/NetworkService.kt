@@ -1,6 +1,7 @@
 package com.lee.mymvvmsample.network
 
-import okhttp3.ResponseBody
+import com.lee.mymvvmsample.network.model.ImageObj
+import com.lee.mymvvmsample.network.model.VideoObj
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -14,7 +15,7 @@ interface NetworkService {
         @Query("image_type") image_type: String,
         @Query("page") page: Int,
         @Query("per_page") per_page: Int
-    ): Response<Void>
+    ): Response<ImageObj>
 
     // 동영상 검색
     @GET("api/videos/")
@@ -23,5 +24,5 @@ interface NetworkService {
         @Query("q") q: String,
         @Query("page") page: Int,
         @Query("per_page") per_page: Int
-    ): Response<Void>
+    ): Response<VideoObj>
 }
