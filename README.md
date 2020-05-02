@@ -1,5 +1,5 @@
 # MyMvvmSample
-My kotlin Mvvm pattern Sample 
+My kotlin MVVM Sample 
 
 ### 기본구조 ###
 
