@@ -51,9 +51,4 @@ class NetworkRepository(private val service: NetworkService) {
         callResponse { service.searchImage(params.key!!, params.q!!, params.image_type!!, params.page!!, params.per_page!!) }
     }
 
-    // Search Video
-    suspend fun searchVideo(params: RequestVideoParam): NetworkResult<VideoObj> = withContext(Dispatchers.IO) {
-        callResponse { service.searchVideo(params.key!!, params.q!!, params.page!!, params.per_page!!) }
-    }
-
 }

@@ -39,16 +39,6 @@ class HomeFragment : Fragment() {
     }
 
     private fun initEvent() {
-        viewModel.selectImage.observe(viewLifecycleOwner, Observer {
-            if (it) {
-                ivCheckSelectImage.setBackgroundResource(R.drawable.icon_chk_btn_on)
-                ivCheckSelectVideo.setBackgroundResource(R.drawable.icon_chk_btn_off)
-            } else {
-                ivCheckSelectImage.setBackgroundResource(R.drawable.icon_chk_btn_off)
-                ivCheckSelectVideo.setBackgroundResource(R.drawable.icon_chk_btn_on)
-            }
-        })
-
         viewModel.searchResultEvent.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is HomeViewModel.SearchResult.Success -> {

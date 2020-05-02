@@ -17,7 +17,7 @@
         <LinearLayout
             android:id="@+id/rLayoutTop"
             android:layout_width="0dp"
-            android:layout_height="100dp"
+            android:layout_height="60dp"
             android:orientation="vertical"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -25,7 +25,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp">
+                android:layout_height="match_parent">
 
                 <EditText
                     android:id="@+id/etSearch"
@@ -53,67 +53,6 @@
                     android:onClick="@{() -> VM.onClickSearch() }"/>
 
             </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/color_dark_gray"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="20dp"
-                    android:gravity="center_vertical"
-                    android:onClick="@{() -> VM.onClickSelectImage()}">
-
-                    <ImageView
-                        android:id="@+id/ivCheckSelectImage"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:background="@drawable/icon_chk_btn_on"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:text="Image"
-                        android:textSize="16dp"
-                        android:textColor="@color/color_black"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="50dp"
-                    android:gravity="center_vertical"
-                    android:onClick="@{() -> VM.onClickSelectVideo()}">
-
-                    <ImageView
-                        android:id="@+id/ivCheckSelectVideo"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:background="@drawable/icon_chk_btn_off"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:text="Video"
-                        android:textSize="16dp"
-                        android:textColor="@color/color_black"/>
-
-                </LinearLayout>
-
-            </LinearLayout>
 
         </LinearLayout>
 
