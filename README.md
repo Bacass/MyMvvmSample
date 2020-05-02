@@ -34,3 +34,8 @@ My kotlin Mvvm pattern Sample
 ### !!! ###
 * 위 내용을 최대한 지켜가며 작업해주세요.
 * 위 내용은 언제든 추가/수정 가능합니다.
+
+### ###
+<div>
+<img src="https://user-images.githubusercontent.com/23072075/80856672-cbbeb200-8c86-11ea-88cd-259416be19df.gif" width="90%"></img>
+</div>
