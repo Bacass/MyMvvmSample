@@ -37,5 +37,5 @@ My kotlin Mvvm pattern Sample
 
 ### ###
 <div>
-<img src="https://user-images.githubusercontent.com/23072075/80856672-cbbeb200-8c86-11ea-88cd-259416be19df.gif" width="90%"></img>
+<img src="https://user-images.githubusercontent.com/23072075/80856672-cbbeb200-8c86-11ea-88cd-259416be19df.gif" width="40%"></img>
 </div>
