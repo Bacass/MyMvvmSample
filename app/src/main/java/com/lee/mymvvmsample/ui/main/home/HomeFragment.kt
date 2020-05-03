@@ -9,6 +9,8 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.lee.mymvvmsample.R
 import com.lee.mymvvmsample.databinding.FragmentHomeBinding
 import com.lee.mymvvmsample.ui.main.MainActivity
@@ -59,6 +61,13 @@ class HomeFragment : Fragment() {
             }
         })
 
+        viewModel.resetList.observe(viewLifecycleOwner, Observer {
+            if (it) {
+                viewModel.resetList.value = false
+                mImageAdapter?.resetList()
+            }
+        })
+
         mBinding?.etSearch?.setOnEditorActionListener { v, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 (activity as MainActivity).hideKeyboard(v)
@@ -68,5 +77,19 @@ class HomeFragment : Fragment() {
 
             false
         }
+
+        mBinding?.rcList?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                var lastVisibleItemPosition = (rcList.layoutManager as LinearLayoutManager).findLastCompletelyVisibleItemPosition()
+                var itemTotalCount = mImageAdapter?.itemCount!! - 1
+
+                if (lastVisibleItemPosition == itemTotalCount) {
+                    // 리스트 바닥 도착, 다음 페이지 호출
+                    viewModel.onLoadContinue()
+                }
+            }
+        })
     }
 }

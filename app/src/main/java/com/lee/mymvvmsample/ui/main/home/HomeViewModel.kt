@@ -1,6 +1,7 @@
 package com.lee.mymvvmsample.ui.main.home
 
 import android.text.TextUtils
+import androidx.lifecycle.MutableLiveData
 import com.lee.mymvvmsample.common.BaseViewModel
 import com.lee.mymvvmsample.common.utils.Constants
 import com.lee.mymvvmsample.common.utils.SingleLiveEvent
@@ -23,6 +24,10 @@ class HomeViewModel(private val repository: NetworkRepository) : BaseViewModel()
     var mPage: Int = 1
 
     var imageListData: MutableList<ImageHits>? = mutableListOf()
+
+    var resetList = MutableLiveData<Boolean>().apply {
+        value = false
+    }
 
     /**
      * 이미지 검색 api 호출.
@@ -61,6 +66,15 @@ class HomeViewModel(private val repository: NetworkRepository) : BaseViewModel()
      */
     fun onClickSearch() {
         if (!TextUtils.isEmpty(etStr)) {
+            mPage = 1
+            resetList.value = true
+            searchImage(etStr, mPage)
+        }
+    }
+
+    fun onLoadContinue() {
+        if (!TextUtils.isEmpty(etStr)) {
+            mPage += 1
             searchImage(etStr, mPage)
         }
     }

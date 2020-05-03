@@ -53,6 +53,10 @@ class HomeImageAdapter(private val viewModel: HomeViewModel) :
         }
     }
 
+    fun resetList() {
+        item_list.clear()
+    }
+
     inner class ItemViewHolder(private val binding: ItemHomeBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: ImageHits, position: Int) {
