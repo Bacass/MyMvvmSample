@@ -1,11 +1,9 @@
 # MyMvvmSample
-My kotlin Mvvm pattern Sample 
+My kotlin MVVM Sample 
 
 ### 기본구조 ###
 
 * Kotiln + MVVM + Retrofit2 + Gson + Glide + Koin
-* 기본적인 구조는 [미세먼지가 너무해] 와 [PickNPick] 의 프로젝트에서 필요한 구조들을 가져와서 구성했다.
-* 네트워크는 [PickNPick] 의 구조를 그대로 가져와서 구성했기 때문에 쿠키설정과 ViewModel 의 구현방식도 똑같다.
 * api 는 NetworkService.kt 파일에서 추가한 후 NetworkRepository.kt 파일에서 한번 더 작업한 것을 사용하는 구조다.
 * 의존성주입(DI) 는 Koin 을 이용했다.
 * 새로운 ViewModel 을 추가할때마다 MyApplication.kt 에서 ViewModel 을 등록해줘야 한다.
@@ -36,3 +34,8 @@ My kotlin Mvvm pattern Sample
 ### !!! ###
 * 위 내용을 최대한 지켜가며 작업해주세요.
 * 위 내용은 언제든 추가/수정 가능합니다.
+
+### ###
+<div>
+<img src="https://user-images.githubusercontent.com/23072075/80856672-cbbeb200-8c86-11ea-88cd-259416be19df.gif" width="30%"></img>
+</div>
