@@ -1,5 +1,8 @@
 package com.lee.mymvvmsample.ui.main.home
 
+import android.content.ActivityNotFoundException
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,7 +20,8 @@ import com.lee.mymvvmsample.ui.main.MainActivity
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class HomeFragment : Fragment() {
+
+class HomeFragment : Fragment(), OnClickHandler {
     private val viewModel: HomeViewModel by viewModel()
 
     private var mBinding: FragmentHomeBinding? = null
@@ -47,7 +51,7 @@ class HomeFragment : Fragment() {
                     Toast.makeText(context, "데이타 수신", Toast.LENGTH_SHORT).show()
 
                     if (mImageAdapter == null) {
-                        mImageAdapter = HomeImageAdapter(viewModel)
+                        mImageAdapter = HomeImageAdapter(this@HomeFragment)
                         mBinding?.rcList?.adapter = mImageAdapter
                     }
                     mImageAdapter?.initItem(viewModel.imageListData?.toList())
@@ -91,5 +95,12 @@ class HomeFragment : Fragment() {
                 }
             }
         })
+    }
+
+    override fun onClickItem(url: String) {
+        try {
+            activity?.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+        } catch (e: ActivityNotFoundException) {
+        }
     }
 }

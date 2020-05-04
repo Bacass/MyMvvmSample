@@ -15,7 +15,7 @@ import org.koin.core.KoinComponent
 import org.koin.core.get
 import timber.log.Timber
 
-class HomeImageAdapter(private val viewModel: HomeViewModel) :
+class HomeImageAdapter(val listener: OnClickHandler) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>(), KoinComponent {
 
     private val imageLoader: ImageLoader = get()
@@ -65,6 +65,10 @@ class HomeImageAdapter(private val viewModel: HomeViewModel) :
             binding.llContents.layoutParams = LinearLayout.LayoutParams(itemWidth, itemWidth)
 
             imageLoader.imageLoadWithURL(item.previewURL, binding.ivContent)
+
+            binding.llContents.setOnClickListener {
+                listener.onClickItem(item.largeImageURL)
+            }
         }
     }
 }
