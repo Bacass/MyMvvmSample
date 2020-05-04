@@ -10,6 +10,7 @@ import com.lee.mymvvmsample.network.NetworkResult
 import com.lee.mymvvmsample.network.model.ImageHits
 import com.lee.mymvvmsample.network.model.RequestImageParam
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class HomeViewModel(private val repository: NetworkRepository) : BaseViewModel() {
     sealed class SearchResult {
@@ -39,7 +40,7 @@ class HomeViewModel(private val repository: NetworkRepository) : BaseViewModel()
                 q = _query
                 image_type = "photo"
                 page = _page
-                per_page = 30
+                per_page = 20
             }
             repository.searchImage(params).run {
                 when (this) {
@@ -47,7 +48,7 @@ class HomeViewModel(private val repository: NetworkRepository) : BaseViewModel()
                         if (this.response?.hits!!.isEmpty()) {
                             searchResultEvent.sendEvent(SearchResult.Fail(""))
                         } else {
-                            imageListData?.addAll(response?.hits)
+                            imageListData = response?.hits
 
                             searchResultEvent.sendEvent(SearchResult.Success)
                         }

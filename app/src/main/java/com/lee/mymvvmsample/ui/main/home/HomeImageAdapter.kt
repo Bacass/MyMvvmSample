@@ -13,6 +13,7 @@ import com.lee.mymvvmsample.network.model.ImageHits
 import com.lee.mymvvmsample.databinding.ItemHomeBinding
 import org.koin.core.KoinComponent
 import org.koin.core.get
+import timber.log.Timber
 
 class HomeImageAdapter(private val viewModel: HomeViewModel) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>(), KoinComponent {
@@ -49,6 +50,7 @@ class HomeImageAdapter(private val viewModel: HomeViewModel) :
     fun initItem(list: List<ImageHits>?) {
         list?.let {
             this.item_list.addAll(it)
+            Timber.d("Lee item_list.size: ${item_list?.size}")
             notifyDataSetChanged()
         }
     }
