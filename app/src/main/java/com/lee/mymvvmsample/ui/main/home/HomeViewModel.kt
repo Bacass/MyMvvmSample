@@ -33,7 +33,7 @@ class HomeViewModel(private val repository: NetworkRepository) : BaseViewModel()
     /**
      * 이미지 검색 api 호출.
      */
-    fun searchImage(_query: String, _page: Int) {
+    private fun searchImage(_query: String, _page: Int) {
         uiScope.launch {
             var params = RequestImageParam().apply {
                 key = Constants.PIXABAY_KEY
