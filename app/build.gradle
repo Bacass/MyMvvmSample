@@ -79,4 +79,7 @@ dependencies {
 
     // Timber Log Library
     implementation 'com.jakewharton.timber:timber:4.7.1'
+
+    // Network
+    implementation "com.github.skydoves:sandwich:1.2.4"
 }

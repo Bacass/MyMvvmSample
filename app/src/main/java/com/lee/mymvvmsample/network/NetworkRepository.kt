@@ -2,6 +2,7 @@ package com.lee.mymvvmsample.network
 
 import com.google.gson.JsonParser
 import com.lee.mymvvmsample.network.model.*
+import com.skydoves.sandwich.ApiResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.ResponseBody
@@ -46,9 +47,12 @@ class NetworkRepository(private val service: NetworkService) {
 
 
 
-    // Search Image
-    suspend fun searchImage(params: RequestImageParam): NetworkResult<ImageObj> = withContext(Dispatchers.IO) {
-        callResponse { service.searchImage(params.key!!, params.q!!, params.image_type!!, params.page!!, params.per_page!!) }
-    }
+//    // Search Image
+//    suspend fun searchImage(params: RequestImageParam): NetworkResult<ImageObj> = withContext(Dispatchers.IO) {
+//        callResponse { service.searchImage(params.key!!, params.q!!, params.image_type!!, params.page!!, params.per_page!!) }
+//    }
 
+    suspend fun searchImage(params: RequestImageParam): ApiResponse<ImageObj> {
+        return service.searchImage(params.key!!, params.q!!, params.image_type!!, params.page!!, params.per_page!!)
+    }
 }

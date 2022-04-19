@@ -16,6 +16,8 @@ import com.lee.mymvvmsample.network.ReceivedCookieInterceptor
 import com.lee.mymvvmsample.ui.main.gallery.GalleryViewModel
 import com.lee.mymvvmsample.ui.main.home.HomeViewModel
 import com.lee.mymvvmsample.ui.main.share.ShareViewModel
+import com.skydoves.sandwich.adapters.ApiResponseCallAdapterFactory
+import com.skydoves.sandwich.coroutines.CoroutinesResponseCallAdapterFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidContext
@@ -65,8 +67,11 @@ class MyApplication: Application() {
                 }).apply {
                     level = HttpLoggingInterceptor.Level.BODY
                 })
-            }.build()).addConverterFactory(ScalarsConverterFactory.create()).addConverterFactory(
-                GsonConverterFactory.create()).build().create()
+            }.build())
+                //.addConverterFactory(ScalarsConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(ApiResponseCallAdapterFactory.create())
+                .build().create()
         }
 
         single {

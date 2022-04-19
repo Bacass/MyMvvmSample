@@ -9,6 +9,10 @@ import com.lee.mymvvmsample.network.NetworkRepository
 import com.lee.mymvvmsample.network.NetworkResult
 import com.lee.mymvvmsample.network.model.ImageHits
 import com.lee.mymvvmsample.network.model.RequestImageParam
+import com.skydoves.sandwich.onError
+import com.skydoves.sandwich.onException
+import com.skydoves.sandwich.onFailure
+import com.skydoves.sandwich.onSuccess
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -42,23 +46,38 @@ class HomeViewModel(private val repository: NetworkRepository) : BaseViewModel()
                 page = _page
                 per_page = 20
             }
-            repository.searchImage(params).run {
-                when (this) {
-                    is NetworkResult.Success -> {
-                        if (this.response?.hits!!.isEmpty()) {
-                            searchResultEvent.sendEvent(SearchResult.Fail(""))
-                        } else {
-                            imageListData = response?.hits
+//            repository.searchImage(params).run {
+//                when (this) {
+//                    is NetworkResult.Success -> {
+//                        if (this.response?.hits!!.isEmpty()) {
+//                            searchResultEvent.sendEvent(SearchResult.Fail(""))
+//                        } else {
+//                            imageListData = response?.hits
+//
+//                            searchResultEvent.sendEvent(SearchResult.Success)
+//                        }
+//                    }
+//                    is NetworkResult.Error -> {
+//                        searchResultEvent.sendEvent(SearchResult.NetworkError)
+//                        return@launch
+//                    }
+//                }
+//            }
 
-                            searchResultEvent.sendEvent(SearchResult.Success)
-                        }
+            repository.searchImage(params)
+                .onSuccess {
+                    if (this.response.body()?.hits!!.isEmpty()) {
+                        searchResultEvent.sendEvent(SearchResult.Fail(""))
+                    } else {
+                        imageListData = this.response.body()?.hits
+
+                        searchResultEvent.sendEvent(SearchResult.Success)
                     }
-                    is NetworkResult.Error -> {
-                        searchResultEvent.sendEvent(SearchResult.NetworkError)
-                        return@launch
-                    }
+                }.onError {
+                    searchResultEvent.sendEvent(SearchResult.NetworkError)
+                }.onException {
+                    this.exception.printStackTrace()
                 }
-            }
         }
     }
 
