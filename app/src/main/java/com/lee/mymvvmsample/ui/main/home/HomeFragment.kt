@@ -62,6 +62,10 @@ class HomeFragment : Fragment(), OnClickHandler {
                 is HomeViewModel.SearchResult.NetworkError -> {
                     Toast.makeText(context, "NetworkError", Toast.LENGTH_SHORT).show()
                 }
+                else -> {
+
+                }
+
             }
         })
 
