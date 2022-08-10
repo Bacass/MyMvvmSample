@@ -4,11 +4,11 @@ My kotlin MVVM Sample
 ### 기본구조 ###
 
 * Kotiln + MVVM + Retrofit2 + Gson + Glide + Koin
-* api 는 NetworkService.kt 파일에서 추가한 후 NetworkRepository.kt 파일에서 한번 더 작업한 것을 사용하는 구조다.
-* 의존성주입(DI) 는 Koin 을 이용했다.
-* 새로운 ViewModel 을 추가할때마다 MyApplication.kt 에서 ViewModel 을 등록해줘야 한다.
-* SharedPreference 는 kotpref 를 이용했다.
-* Log 는 Timber 를 이용했다.
+* api 는 NetworkService.kt 파일에서 추가한 후 NetworkRepository.kt 파일에서 한번 더 작업한 것을 사용하는 구조입니다.
+* 의존성주입(DI) 는 Koin 을 이용했습니다.
+* 새로운 ViewModel 을 추가할때마다 MyApplication.kt 에서 ViewModel 을 등록해줘야 합니다.
+* SharedPreference 는 kotpref 를 이용했습니다.
+* Log 는 Timber 를 이용했습니다.
 
 ### 코딩 컨벤션 ###
 
