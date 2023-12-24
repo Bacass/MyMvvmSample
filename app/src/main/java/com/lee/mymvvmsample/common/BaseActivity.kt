@@ -19,9 +19,9 @@ abstract class BaseActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
     }
 
-    override fun onBackPressed() {
-        finishActivity()
-    }
+//    override fun onBackPressed() {
+//        finishActivity()
+//    }
 
     override fun onPause() {
         super.onPause()

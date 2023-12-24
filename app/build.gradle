@@ -37,6 +37,7 @@ android {
     }
     buildFeatures {
         dataBinding = true
+        viewBinding = true
     }
     namespace 'com.lee.mymvvmsample'
 }
@@ -68,7 +69,7 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.10'
 
     // kotpref
-    implementation "com.chibatching.kotpref:kotpref:2.8.0"
+    implementation "com.chibatching.kotpref:kotpref:2.13.1"
 
     // Koin
     implementation "org.koin:koin-androidx-scope:2.0.1"

@@ -21,6 +21,8 @@ import timber.log.Timber
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
     private val viewModel: MainViewModel by viewModel()
 
+    private lateinit var binding: ActivityMainBinding
+
     private var mCloseApp: Boolean = false
 
     private var mBinding: ActivityMainBinding? = null
@@ -31,6 +33,8 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         setContentView(mBinding?.root)
 
         mBinding?.navView?.setNavigationItemSelectedListener(this)
+
+        binding.mainNavView.setNavigationItemSelectedListener(this)
 
         if (savedInstanceState == null) {
             addFragment(HomeFragment(), "HomeFragment")

@@ -26,7 +26,6 @@ class HomeFragment : Fragment(), OnClickHandler {
     private var mBinding: FragmentHomeBinding? = null
     private var mImageAdapter: HomeImageAdapter? = null
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
