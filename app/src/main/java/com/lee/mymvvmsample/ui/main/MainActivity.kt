@@ -34,8 +34,6 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
         mBinding?.navView?.setNavigationItemSelectedListener(this)
 
-        binding.mainNavView.setNavigationItemSelectedListener(this)
-
         if (savedInstanceState == null) {
             addFragment(HomeFragment(), "HomeFragment")
         }
