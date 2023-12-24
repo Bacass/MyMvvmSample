@@ -5,15 +5,16 @@ import android.os.Handler
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.core.view.GravityCompat
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.google.android.material.navigation.NavigationView
 import com.lee.mymvvmsample.R
 import com.lee.mymvvmsample.common.BaseActivity
 import com.lee.mymvvmsample.common.addFragment
+import com.lee.mymvvmsample.databinding.ActivityMainBinding
 import com.lee.mymvvmsample.ui.main.gallery.GalleryFragment
 import com.lee.mymvvmsample.ui.main.home.HomeFragment
 import com.lee.mymvvmsample.ui.main.share.ShareFragment
-import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
@@ -22,11 +23,14 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
     private var mCloseApp: Boolean = false
 
+    private var mBinding: ActivityMainBinding? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        mBinding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
+        setContentView(mBinding?.root)
 
-        nav_view.setNavigationItemSelectedListener(this)
+        mBinding?.navView?.setNavigationItemSelectedListener(this)
 
         if (savedInstanceState == null) {
             addFragment(HomeFragment(), "HomeFragment")
@@ -68,7 +72,8 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             }
         }
 
-        drawer_layout.closeDrawer(GravityCompat.START)
+        mBinding?.drawerLayout?.closeDrawer(GravityCompat.START)
+
         return true
     }
 

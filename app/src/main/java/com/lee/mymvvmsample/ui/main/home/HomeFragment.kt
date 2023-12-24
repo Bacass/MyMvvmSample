@@ -17,7 +17,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.lee.mymvvmsample.R
 import com.lee.mymvvmsample.databinding.FragmentHomeBinding
 import com.lee.mymvvmsample.ui.main.MainActivity
-import kotlinx.android.synthetic.main.fragment_home.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -90,7 +89,7 @@ class HomeFragment : Fragment(), OnClickHandler {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
 
-                var lastVisibleItemPosition = (rcList.layoutManager as LinearLayoutManager).findLastCompletelyVisibleItemPosition()
+                var lastVisibleItemPosition = (mBinding?.rcList!!.layoutManager as LinearLayoutManager).findLastCompletelyVisibleItemPosition()
                 var itemTotalCount = mImageAdapter?.itemCount!! - 1
 
                 if (lastVisibleItemPosition == itemTotalCount) {
