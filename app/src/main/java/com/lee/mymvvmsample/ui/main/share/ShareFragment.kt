@@ -6,12 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.lee.mymvvmsample.R
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ShareFragment : Fragment() {
-    private val viewModel: ShareViewModel by viewModel()
+    private val viewModel: ShareViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,

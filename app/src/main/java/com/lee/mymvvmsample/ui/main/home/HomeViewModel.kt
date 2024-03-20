@@ -13,10 +13,13 @@ import com.skydoves.sandwich.onError
 import com.skydoves.sandwich.onException
 import com.skydoves.sandwich.onFailure
 import com.skydoves.sandwich.onSuccess
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import javax.inject.Inject
 
-class HomeViewModel(private val repository: NetworkRepository) : BaseViewModel() {
+@HiltViewModel
+class HomeViewModel @Inject constructor(private val repository: NetworkRepository) : BaseViewModel() {
     sealed class SearchResult {
         object Success : SearchResult()
         class Fail(val errorMsg: String) : SearchResult()

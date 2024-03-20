@@ -9,21 +9,21 @@ import com.lee.mymvvmsample.R
 import com.lee.mymvvmsample.common.toPixel
 import com.lee.mymvvmsample.common.utils.DeviceInfo
 import com.lee.mymvvmsample.common.utils.ImageLoader
-import com.lee.mymvvmsample.network.model.ImageHits
 import com.lee.mymvvmsample.databinding.ItemHomeBinding
-import org.koin.core.KoinComponent
-import org.koin.core.get
+import com.lee.mymvvmsample.network.model.ImageHits
 import timber.log.Timber
 
 class HomeImageAdapter(val listener: OnClickHandler) :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>(), KoinComponent {
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private val imageLoader: ImageLoader = get()
+    lateinit var imageLoader:ImageLoader
 
     private var item_list = mutableListOf<ImageHits>()
     private var itemWidth = 150
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+
+        imageLoader = ImageLoader(parent.context)
 
         itemWidth = (DeviceInfo.getDeviceWidth(parent.context) - 40f.toPixel(parent.context)) / 3
 

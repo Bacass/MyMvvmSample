@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -65,14 +67,10 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:4.11.0'
     implementation 'com.squareup.okhttp3:okhttp-urlconnection:4.4.1'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.11.0'
-    implementation 'com.google.code.gson:gson:2.10'
+    implementation 'com.google.code.gson:gson:2.10.1'
 
     // kotpref
     implementation "com.chibatching.kotpref:kotpref:2.13.1"
-
-    // Koin
-    implementation "org.koin:koin-androidx-scope:2.0.1"
-    implementation "org.koin:koin-androidx-viewmodel:2.0.1"
 
     // Image
     implementation "com.github.bumptech.glide:glide:4.11.0"
@@ -82,4 +80,13 @@ dependencies {
 
     // Network
     implementation "com.github.skydoves:sandwich:1.2.4"
+
+    // Hilt dagger
+    implementation "com.google.dagger:hilt-android:2.44"
+    kapt "com.google.dagger:hilt-android-compiler:2.44"
+
+    // Activity KTX for viewModels()
+    implementation "androidx.activity:activity-ktx:1.8.2"
+    // Architectural Components
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0"
 }

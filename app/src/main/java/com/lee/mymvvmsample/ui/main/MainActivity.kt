@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -15,11 +16,12 @@ import com.lee.mymvvmsample.databinding.ActivityMainBinding
 import com.lee.mymvvmsample.ui.main.gallery.GalleryFragment
 import com.lee.mymvvmsample.ui.main.home.HomeFragment
 import com.lee.mymvvmsample.ui.main.share.ShareFragment
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
+@AndroidEntryPoint
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
-    private val viewModel: MainViewModel by viewModel()
+    private val viewModel: MainViewModel by viewModels()
 
     private lateinit var binding: ActivityMainBinding
 

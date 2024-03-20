@@ -7,8 +7,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.ResponseBody
 import retrofit2.Response
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class NetworkRepository(private val service: NetworkService) {
+@Singleton
+class NetworkRepository @Inject constructor(private val service: NetworkService) {
 
     private fun parseErrorResult(body: ResponseBody): NetworkResult.Error {
         try {

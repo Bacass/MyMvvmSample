@@ -3,7 +3,9 @@ package com.lee.mymvvmsample.common.utils
 import android.content.Context
 import android.widget.ImageView
 import com.bumptech.glide.Glide
+import dagger.hilt.android.qualifiers.ApplicationContext
 import java.io.File
+import javax.inject.Inject
 
 class ImageLoader(private val context: Context) {
 
