@@ -2,10 +2,9 @@ package com.lee.mymvvmsample.network
 
 import com.lee.mymvvmsample.network.model.ImageObj
 import com.skydoves.sandwich.ApiResponse
-import retrofit2.Response
 import retrofit2.http.*
 
-interface NetworkService {
+interface NetworkServiceRepository {
 
     // 이미지 검색
 //    @GET("api/")

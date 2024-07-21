@@ -5,21 +5,18 @@ import androidx.lifecycle.MutableLiveData
 import com.lee.mymvvmsample.common.BaseViewModel
 import com.lee.mymvvmsample.common.utils.Constants
 import com.lee.mymvvmsample.common.utils.SingleLiveEvent
-import com.lee.mymvvmsample.network.NetworkRepository
-import com.lee.mymvvmsample.network.NetworkResult
+import com.lee.mymvvmsample.network.NetworkRepositoryImpl
 import com.lee.mymvvmsample.network.model.ImageHits
 import com.lee.mymvvmsample.network.model.RequestImageParam
 import com.skydoves.sandwich.onError
 import com.skydoves.sandwich.onException
-import com.skydoves.sandwich.onFailure
 import com.skydoves.sandwich.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(private val repository: NetworkRepository) : BaseViewModel() {
+class HomeViewModel @Inject constructor(private val repository: NetworkRepositoryImpl) : BaseViewModel() {
     sealed class SearchResult {
         object Success : SearchResult()
         class Fail(val errorMsg: String) : SearchResult()

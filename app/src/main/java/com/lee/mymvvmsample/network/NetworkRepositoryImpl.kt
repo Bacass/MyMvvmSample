@@ -3,15 +3,13 @@ package com.lee.mymvvmsample.network
 import com.google.gson.JsonParser
 import com.lee.mymvvmsample.network.model.*
 import com.skydoves.sandwich.ApiResponse
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import okhttp3.ResponseBody
 import retrofit2.Response
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class NetworkRepository @Inject constructor(private val service: NetworkService) {
+class NetworkRepositoryImpl @Inject constructor(private val service: NetworkServiceRepository) {
 
     private fun parseErrorResult(body: ResponseBody): NetworkResult.Error {
         try {

@@ -1,25 +1,21 @@
 package com.lee.mymvvmsample.di
 
-import android.content.Context
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonParser
 import com.google.gson.JsonSyntaxException
 import com.lee.mymvvmsample.BuildConfig
-import com.lee.mymvvmsample.common.utils.ImageLoader
 import com.lee.mymvvmsample.network.AddCookieInterceptor
-import com.lee.mymvvmsample.network.NetworkService
+import com.lee.mymvvmsample.network.NetworkServiceRepository
 import com.lee.mymvvmsample.network.ReceivedCookieInterceptor
 import com.skydoves.sandwich.adapters.ApiResponseCallAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
@@ -79,7 +75,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideNetworkService(retrofit: Retrofit): NetworkService {
-        return retrofit.create(NetworkService::class.java)
+    fun provideNetworkServiceRepository(retrofit: Retrofit): NetworkServiceRepository {
+        return retrofit.create(NetworkServiceRepository::class.java)
     }
 }

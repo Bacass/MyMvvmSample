@@ -2,12 +2,12 @@ package com.lee.mymvvmsample.ui.main
 
 import com.lee.mymvvmsample.common.BaseViewModel
 import com.lee.mymvvmsample.common.utils.SingleLiveEvent
-import com.lee.mymvvmsample.network.NetworkRepository
+import com.lee.mymvvmsample.network.NetworkRepositoryImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(private val repository: NetworkRepository): BaseViewModel() {
+class MainViewModel @Inject constructor(private val repository: NetworkRepositoryImpl): BaseViewModel() {
     sealed class LoginResult {
         object Success : LoginResult()
         class Fail(val errorMsg: String) : LoginResult()
