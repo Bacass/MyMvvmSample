@@ -50,7 +50,7 @@ class HomeImageAdapter(val listener: OnClickHandler) :
     fun initItem(list: List<ImageHits>?) {
         list?.let {
             this.item_list.addAll(it)
-            Timber.d("Lee item_list.size: ${item_list?.size}")
+            Timber.d("item_list.size: ${item_list?.size}")
             notifyDataSetChanged()
         }
     }
