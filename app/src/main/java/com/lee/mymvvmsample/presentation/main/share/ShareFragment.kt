@@ -1,4 +1,4 @@
-package com.lee.mymvvmsample.ui.main.share
+package com.lee.mymvvmsample.presentation.main.share
 
 import android.os.Bundle
 import android.view.LayoutInflater

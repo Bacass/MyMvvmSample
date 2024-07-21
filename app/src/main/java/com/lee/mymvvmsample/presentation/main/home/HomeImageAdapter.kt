@@ -1,4 +1,4 @@
-package com.lee.mymvvmsample.ui.main.home
+package com.lee.mymvvmsample.presentation.main.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -10,7 +10,7 @@ import com.lee.mymvvmsample.common.toPixel
 import com.lee.mymvvmsample.common.utils.DeviceInfo
 import com.lee.mymvvmsample.common.utils.ImageLoader
 import com.lee.mymvvmsample.databinding.ItemHomeBinding
-import com.lee.mymvvmsample.network.model.ImageHits
+import com.lee.mymvvmsample.data.model.ImageHits
 import timber.log.Timber
 
 class HomeImageAdapter(val listener: OnClickHandler) :

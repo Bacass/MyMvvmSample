@@ -1,4 +1,4 @@
-package com.lee.mymvvmsample.network
+package com.lee.mymvvmsample.data.network
 
 sealed class NetworkResult<out T : Any> {
     class Success<out T : Any>(val response: T?) : NetworkResult<T>()

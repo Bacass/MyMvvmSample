@@ -1,13 +1,13 @@
-package com.lee.mymvvmsample.ui.main.home
+package com.lee.mymvvmsample.presentation.viewmodel
 
 import android.text.TextUtils
 import androidx.lifecycle.MutableLiveData
 import com.lee.mymvvmsample.common.BaseViewModel
 import com.lee.mymvvmsample.common.utils.Constants
 import com.lee.mymvvmsample.common.utils.SingleLiveEvent
-import com.lee.mymvvmsample.network.NetworkRepositoryImpl
-import com.lee.mymvvmsample.network.model.ImageHits
-import com.lee.mymvvmsample.network.model.RequestImageParam
+import com.lee.mymvvmsample.data.network.NetworkRepositoryImpl
+import com.lee.mymvvmsample.data.model.ImageHits
+import com.lee.mymvvmsample.data.model.RequestImageParam
 import com.skydoves.sandwich.onError
 import com.skydoves.sandwich.onException
 import com.skydoves.sandwich.onSuccess
@@ -16,7 +16,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(private val repository: NetworkRepositoryImpl) : BaseViewModel() {
+class HomeViewModel @Inject constructor(private val repository: NetworkRepositoryImpl) :
+    BaseViewModel() {
     sealed class SearchResult {
         object Success : SearchResult()
         class Fail(val errorMsg: String) : SearchResult()
@@ -39,13 +40,14 @@ class HomeViewModel @Inject constructor(private val repository: NetworkRepositor
      */
     private fun searchImage(_query: String, _page: Int) {
         uiScope.launch {
-            var params = RequestImageParam().apply {
-                key = Constants.PIXABAY_KEY
-                q = _query
-                image_type = "photo"
-                page = _page
+            var params = RequestImageParam(
+                key = Constants.PIXABAY_KEY,
+                q = _query,
+                image_type = "photo",
+                page = _page,
                 per_page = 20
-            }
+            )
+
 //            repository.searchImage(params).run {
 //                when (this) {
 //                    is NetworkResult.Success -> {

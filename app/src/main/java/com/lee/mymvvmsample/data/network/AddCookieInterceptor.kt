@@ -1,4 +1,4 @@
-package com.lee.mymvvmsample.network
+package com.lee.mymvvmsample.data.network
 
 import com.lee.mymvvmsample.common.utils.AppPrefs
 import okhttp3.Interceptor

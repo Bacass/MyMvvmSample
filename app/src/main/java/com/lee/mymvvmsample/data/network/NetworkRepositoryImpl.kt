@@ -1,7 +1,10 @@
-package com.lee.mymvvmsample.network
+package com.lee.mymvvmsample.data.network
 
 import com.google.gson.JsonParser
-import com.lee.mymvvmsample.network.model.*
+import com.lee.mymvvmsample.data.model.ImageObj
+import com.lee.mymvvmsample.data.model.ListData
+import com.lee.mymvvmsample.data.model.RequestImageParam
+import com.lee.mymvvmsample.domain.NetworkRepository
 import com.skydoves.sandwich.ApiResponse
 import okhttp3.ResponseBody
 import retrofit2.Response
@@ -9,7 +12,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class NetworkRepositoryImpl @Inject constructor(private val service: NetworkServiceRepository) {
+class NetworkRepositoryImpl @Inject constructor(private val repository: NetworkRepository) {
 
     private fun parseErrorResult(body: ResponseBody): NetworkResult.Error {
         try {
@@ -54,6 +57,6 @@ class NetworkRepositoryImpl @Inject constructor(private val service: NetworkServ
 //    }
 
     suspend fun searchImage(params: RequestImageParam): ApiResponse<ImageObj> {
-        return service.searchImage(params.key!!, params.q!!, params.image_type!!, params.page!!, params.per_page!!)
+        return repository.searchImage(params.key!!, params.q!!, params.image_type!!, params.page!!, params.per_page!!)
     }
 }

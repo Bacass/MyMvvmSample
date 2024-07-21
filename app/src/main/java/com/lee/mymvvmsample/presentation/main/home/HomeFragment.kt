@@ -1,4 +1,4 @@
-package com.lee.mymvvmsample.ui.main.home
+package com.lee.mymvvmsample.presentation.main.home
 
 import android.content.ActivityNotFoundException
 import android.content.Intent
@@ -17,7 +17,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.lee.mymvvmsample.R
 import com.lee.mymvvmsample.databinding.FragmentHomeBinding
-import com.lee.mymvvmsample.ui.main.MainActivity
+import com.lee.mymvvmsample.presentation.main.MainActivity
+import com.lee.mymvvmsample.presentation.viewmodel.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

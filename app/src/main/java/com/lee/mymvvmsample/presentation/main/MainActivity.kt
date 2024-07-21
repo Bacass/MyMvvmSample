@@ -1,4 +1,4 @@
-package com.lee.mymvvmsample.ui.main
+package com.lee.mymvvmsample.presentation.main
 
 import android.os.Bundle
 import android.os.Handler
@@ -13,9 +13,10 @@ import com.lee.mymvvmsample.R
 import com.lee.mymvvmsample.common.BaseActivity
 import com.lee.mymvvmsample.common.addFragment
 import com.lee.mymvvmsample.databinding.ActivityMainBinding
-import com.lee.mymvvmsample.ui.main.gallery.GalleryFragment
-import com.lee.mymvvmsample.ui.main.home.HomeFragment
-import com.lee.mymvvmsample.ui.main.share.ShareFragment
+import com.lee.mymvvmsample.presentation.main.gallery.GalleryFragment
+import com.lee.mymvvmsample.presentation.main.home.HomeFragment
+import com.lee.mymvvmsample.presentation.main.share.ShareFragment
+import com.lee.mymvvmsample.presentation.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 

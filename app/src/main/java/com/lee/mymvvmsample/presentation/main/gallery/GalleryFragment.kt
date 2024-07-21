@@ -1,4 +1,4 @@
-package com.lee.mymvvmsample.ui.main.gallery
+package com.lee.mymvvmsample.presentation.main.gallery
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.lee.mymvvmsample.R
+import com.lee.mymvvmsample.presentation.viewmodel.GalleryViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

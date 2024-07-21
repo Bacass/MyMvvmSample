@@ -1,8 +1,8 @@
-package com.lee.mymvvmsample.ui.main
+package com.lee.mymvvmsample.presentation.viewmodel
 
 import com.lee.mymvvmsample.common.BaseViewModel
 import com.lee.mymvvmsample.common.utils.SingleLiveEvent
-import com.lee.mymvvmsample.network.NetworkRepositoryImpl
+import com.lee.mymvvmsample.data.network.NetworkRepositoryImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

@@ -1,4 +1,4 @@
-package com.lee.mymvvmsample.network.model
+package com.lee.mymvvmsample.data.model
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
