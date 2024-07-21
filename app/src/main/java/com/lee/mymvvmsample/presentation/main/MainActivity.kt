@@ -85,7 +85,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     override fun onBackPressed() {
         if (!mCloseApp) {
             mCloseApp = true
-            Toast.makeText(this, "종료하시려면 한번 더 누르세요.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.exit_msg), Toast.LENGTH_SHORT).show()
             Handler().postDelayed({
                 mCloseApp = false
             }, 1000)

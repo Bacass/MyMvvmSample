@@ -48,7 +48,7 @@ class HomeFragment : Fragment(), OnClickHandler {
         viewModel.searchResultEvent.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is HomeViewModel.SearchResult.Success -> {
-                    Toast.makeText(context, "데이타 수신", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, getString(R.string.received_data_msg), Toast.LENGTH_SHORT).show()
 
                     if (mImageAdapter == null) {
                         mImageAdapter = HomeImageAdapter(this@HomeFragment)
@@ -57,7 +57,7 @@ class HomeFragment : Fragment(), OnClickHandler {
                     mImageAdapter?.initItem(viewModel.imageListData?.toList())
                 }
                 is HomeViewModel.SearchResult.Fail -> {
-                    Toast.makeText(context, "데이타 없음", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, getString(R.string.no_data_msg), Toast.LENGTH_SHORT).show()
                 }
                 is HomeViewModel.SearchResult.NetworkError -> {
                     Toast.makeText(context, "NetworkError", Toast.LENGTH_SHORT).show()
