@@ -91,6 +91,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             }, 1000)
             
         } else {
+            super.onBackPressed()
             finishActivity()
         }
     }

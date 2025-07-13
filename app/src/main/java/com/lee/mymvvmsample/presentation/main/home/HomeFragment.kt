@@ -25,8 +25,8 @@ import dagger.hilt.android.AndroidEntryPoint
 class HomeFragment : Fragment(), OnClickHandler {
     private val viewModel: HomeViewModel by viewModels()
 
-    private var mBinding: FragmentHomeBinding? = null
-    private var mImageAdapter: HomeImageAdapter? = null
+    private var binding: FragmentHomeBinding? = null
+    private var imageAdapter: HomeImageAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,14 +34,14 @@ class HomeFragment : Fragment(), OnClickHandler {
         savedInstanceState: Bundle?
     ): View? {
 
-        mBinding = DataBindingUtil.inflate<FragmentHomeBinding>(inflater, R.layout.fragment_home, container, false).apply {
+        binding = DataBindingUtil.inflate<FragmentHomeBinding>(inflater, R.layout.fragment_home, container, false).apply {
             vm = viewModel
             lifecycleOwner = viewLifecycleOwner
         }
 
         initEvent()
 
-        return mBinding?.root
+        return binding?.root
     }
 
     private fun initEvent() {
@@ -50,11 +50,11 @@ class HomeFragment : Fragment(), OnClickHandler {
                 is HomeViewModel.SearchResult.Success -> {
                     Toast.makeText(context, getString(R.string.received_data_msg), Toast.LENGTH_SHORT).show()
 
-                    if (mImageAdapter == null) {
-                        mImageAdapter = HomeImageAdapter(this@HomeFragment)
-                        mBinding?.rcList?.adapter = mImageAdapter
+                    if (imageAdapter == null) {
+                        imageAdapter = HomeImageAdapter(this@HomeFragment)
+                        binding?.rcList?.adapter = imageAdapter
                     }
-                    mImageAdapter?.initItem(viewModel.imageListData?.toList())
+                    imageAdapter?.initItem(viewModel.imageList.toList())
                 }
                 is HomeViewModel.SearchResult.Fail -> {
                     Toast.makeText(context, getString(R.string.no_data_msg), Toast.LENGTH_SHORT).show()
@@ -72,11 +72,11 @@ class HomeFragment : Fragment(), OnClickHandler {
         viewModel.resetList.observe(viewLifecycleOwner, Observer {
             if (it) {
                 viewModel.resetList.value = false
-                mImageAdapter?.resetList()
+                imageAdapter?.resetList()
             }
         })
 
-        mBinding?.etSearch?.setOnEditorActionListener { v, actionId, event ->
+        binding?.etSearch?.setOnEditorActionListener { v, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 (activity as MainActivity).hideKeyboard(v)
 
@@ -86,12 +86,12 @@ class HomeFragment : Fragment(), OnClickHandler {
             false
         }
 
-        mBinding?.rcList?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        binding?.rcList?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
 
-                var lastVisibleItemPosition = (mBinding?.rcList!!.layoutManager as LinearLayoutManager).findLastCompletelyVisibleItemPosition()
-                var itemTotalCount = mImageAdapter?.itemCount!! - 1
+                val lastVisibleItemPosition = (binding?.rcList!!.layoutManager as LinearLayoutManager).findLastCompletelyVisibleItemPosition()
+                val itemTotalCount = imageAdapter?.itemCount!! - 1
 
                 if (lastVisibleItemPosition == itemTotalCount) {
                     // 리스트 바닥 도착, 다음 페이지 호출

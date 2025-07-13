@@ -5,9 +5,12 @@ import com.google.gson.JsonParser
 import com.google.gson.JsonSyntaxException
 import com.lee.mymvvmsample.BuildConfig
 import com.lee.mymvvmsample.data.network.AddCookieInterceptor
-import com.lee.mymvvmsample.domain.NetworkRepository
+import com.lee.mymvvmsample.data.network.ImageApiService
 import com.lee.mymvvmsample.data.network.ReceivedCookieInterceptor
+import com.lee.mymvvmsample.data.repository.ImageRepositoryImpl
+import com.lee.mymvvmsample.domain.repository.ImageRepository
 import com.skydoves.sandwich.adapters.ApiResponseCallAdapterFactory
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,6 +23,16 @@ import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
+@Module
+@InstallIn(SingletonComponent::class)
+abstract class RepositoryModule {
+    
+    @Binds
+    @Singleton
+    abstract fun bindImageRepository(
+        imageRepositoryImpl: ImageRepositoryImpl
+    ): ImageRepository
+}
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -75,7 +88,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideNetworkServiceRepository(retrofit: Retrofit): NetworkRepository {
-        return retrofit.create(NetworkRepository::class.java)
+    fun provideImageApiService(retrofit: Retrofit): ImageApiService {
+        return retrofit.create(ImageApiService::class.java)
     }
 }

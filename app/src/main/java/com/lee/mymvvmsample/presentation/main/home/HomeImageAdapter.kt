@@ -10,15 +10,15 @@ import com.lee.mymvvmsample.common.toPixel
 import com.lee.mymvvmsample.common.utils.DeviceInfo
 import com.lee.mymvvmsample.common.utils.ImageLoader
 import com.lee.mymvvmsample.databinding.ItemHomeBinding
-import com.lee.mymvvmsample.data.model.ImageHits
+import com.lee.mymvvmsample.domain.model.Image
 import timber.log.Timber
 
 class HomeImageAdapter(val listener: OnClickHandler) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    lateinit var imageLoader:ImageLoader
+    lateinit var imageLoader: ImageLoader
 
-    private var item_list = mutableListOf<ImageHits>()
+    private var itemList = mutableListOf<Image>()
     private var itemWidth = 150
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -37,31 +37,31 @@ class HomeImageAdapter(val listener: OnClickHandler) :
         )
     }
 
-    override fun getItemCount(): Int = item_list.size
+    override fun getItemCount(): Int = itemList.size
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is ItemViewHolder -> {
-                holder.bind(item_list[position], position)
+                holder.bind(itemList[position], position)
             }
         }
     }
 
-    fun initItem(list: List<ImageHits>?) {
+    fun initItem(list: List<Image>?) {
         list?.let {
-            this.item_list.addAll(it)
-            Timber.d("item_list.size: ${item_list?.size}")
+            this.itemList.addAll(it)
+            Timber.d("itemList.size: ${itemList.size}")
             notifyDataSetChanged()
         }
     }
 
     fun resetList() {
-        item_list.clear()
+        itemList.clear()
     }
 
     inner class ItemViewHolder(private val binding: ItemHomeBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: ImageHits, position: Int) {
+        fun bind(item: Image, position: Int) {
             binding.llContents.layoutParams = LinearLayout.LayoutParams(itemWidth, itemWidth)
 
             imageLoader.imageLoadWithURL(item.previewURL, binding.ivContent)
