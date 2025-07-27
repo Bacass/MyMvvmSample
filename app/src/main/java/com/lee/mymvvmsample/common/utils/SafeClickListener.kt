@@ -7,8 +7,12 @@ import android.view.View
  * 다중 클릭 방지
  *
  */
-class SafeClickListener(private var defaultInterval: Int = 1000, private val onSafeCLick: (View) -> Unit) : View.OnClickListener {
+class SafeClickListener(
+    private var defaultInterval: Int = 1000,
+    private val onSafeCLick: (View) -> Unit,
+) : View.OnClickListener {
     private var lastTimeClicked: Long = 0
+
     override fun onClick(v: View) {
         if (SystemClock.elapsedRealtime() - lastTimeClicked < defaultInterval) {
             return

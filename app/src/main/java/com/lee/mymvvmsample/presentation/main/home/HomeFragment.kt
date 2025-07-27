@@ -31,13 +31,13 @@ class HomeFragment : Fragment(), OnClickHandler {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
-
-        binding = DataBindingUtil.inflate<FragmentHomeBinding>(inflater, R.layout.fragment_home, container, false).apply {
-            vm = viewModel
-            lifecycleOwner = viewLifecycleOwner
-        }
+        binding =
+            DataBindingUtil.inflate<FragmentHomeBinding>(inflater, R.layout.fragment_home, container, false).apply {
+                vm = viewModel
+                lifecycleOwner = viewLifecycleOwner
+            }
 
         initEvent()
 
@@ -45,36 +45,40 @@ class HomeFragment : Fragment(), OnClickHandler {
     }
 
     private fun initEvent() {
-        viewModel.searchResultEvent.observe(viewLifecycleOwner, Observer {
-            when (it) {
-                is HomeViewModel.SearchResult.Success -> {
-                    Toast.makeText(context, getString(R.string.received_data_msg), Toast.LENGTH_SHORT).show()
+        viewModel.searchResultEvent.observe(
+            viewLifecycleOwner,
+            Observer {
+                when (it) {
+                    is HomeViewModel.SearchResult.Success -> {
+                        Toast.makeText(context, getString(R.string.received_data_msg), Toast.LENGTH_SHORT).show()
 
-                    if (imageAdapter == null) {
-                        imageAdapter = HomeImageAdapter(this@HomeFragment)
-                        binding?.rcList?.adapter = imageAdapter
+                        if (imageAdapter == null) {
+                            imageAdapter = HomeImageAdapter(this@HomeFragment)
+                            binding?.rcList?.adapter = imageAdapter
+                        }
+                        imageAdapter?.initItem(viewModel.imageList.toList())
                     }
-                    imageAdapter?.initItem(viewModel.imageList.toList())
+                    is HomeViewModel.SearchResult.Fail -> {
+                        Toast.makeText(context, getString(R.string.no_data_msg), Toast.LENGTH_SHORT).show()
+                    }
+                    is HomeViewModel.SearchResult.NetworkError -> {
+                        Toast.makeText(context, "NetworkError", Toast.LENGTH_SHORT).show()
+                    }
+                    else -> {
+                    }
                 }
-                is HomeViewModel.SearchResult.Fail -> {
-                    Toast.makeText(context, getString(R.string.no_data_msg), Toast.LENGTH_SHORT).show()
-                }
-                is HomeViewModel.SearchResult.NetworkError -> {
-                    Toast.makeText(context, "NetworkError", Toast.LENGTH_SHORT).show()
-                }
-                else -> {
+            },
+        )
 
+        viewModel.resetList.observe(
+            viewLifecycleOwner,
+            Observer {
+                if (it) {
+                    viewModel.resetList.value = false
+                    imageAdapter?.resetList()
                 }
-
-            }
-        })
-
-        viewModel.resetList.observe(viewLifecycleOwner, Observer {
-            if (it) {
-                viewModel.resetList.value = false
-                imageAdapter?.resetList()
-            }
-        })
+            },
+        )
 
         binding?.etSearch?.setOnEditorActionListener { v, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
@@ -86,19 +90,27 @@ class HomeFragment : Fragment(), OnClickHandler {
             false
         }
 
-        binding?.rcList?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
+        binding?.rcList?.addOnScrollListener(
+            object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(
+                    recyclerView: RecyclerView,
+                    dx: Int,
+                    dy: Int,
+                ) {
+                    super.onScrolled(recyclerView, dx, dy)
 
-                val lastVisibleItemPosition = (binding?.rcList!!.layoutManager as LinearLayoutManager).findLastCompletelyVisibleItemPosition()
-                val itemTotalCount = imageAdapter?.itemCount!! - 1
+                    val lastVisibleItemPosition =
+                        (binding?.rcList!!.layoutManager as LinearLayoutManager)
+                            .findLastCompletelyVisibleItemPosition()
+                    val itemTotalCount = imageAdapter?.itemCount!! - 1
 
-                if (lastVisibleItemPosition == itemTotalCount) {
-                    // 리스트 바닥 도착, 다음 페이지 호출
-                    viewModel.onLoadContinue()
+                    if (lastVisibleItemPosition == itemTotalCount) {
+                        // 리스트 바닥 도착, 다음 페이지 호출
+                        viewModel.onLoadContinue()
+                    }
                 }
-            }
-        })
+            },
+        )
     }
 
     override fun onClickItem(url: String) {

@@ -4,7 +4,6 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 open class DateInfo {
-
     open fun systemTimeToDate(time: Long): Date {
         return Date(time)
     }
@@ -38,7 +37,6 @@ open class DateInfo {
         return transFormat.format(Date())
     }
 
-
     open fun getTodayDate04(): String {
         var transFormat = SimpleDateFormat("YYYY-MM-dd")
         return transFormat.format(Date())
@@ -66,7 +64,14 @@ open class DateInfo {
      * hour 입력시 주의
      * 오전/오후 확실히 해서 입력해야 함.
      */
-    open fun makeDate(year: Int, month: Int, date: Int, hour: Int, minute: Int, isAm: Boolean): Date {
+    open fun makeDate(
+        year: Int,
+        month: Int,
+        date: Int,
+        hour: Int,
+        minute: Int,
+        isAm: Boolean,
+    ): Date {
         var cal = Calendar.getInstance()
         cal.set(Calendar.YEAR, year)
         cal.set(Calendar.MONTH, month - 1) // 0 ~ 11 월
@@ -85,14 +90,15 @@ open class DateInfo {
     open fun isToday(date: Date): Boolean {
         val mSimpleDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.KOREA)
         val currentTime = Date()
-        var today = mSimpleDateFormat.format(currentTime) //오늘날짜
+        var today = mSimpleDateFormat.format(currentTime) // 오늘날짜
 //        //Log.d("DateInfo", "오늘날짜 today : $today")
 
         var param = mSimpleDateFormat.format(date) // 전달받은날짜
 //        //Log.d("DateInfo", "전달받은날짜 param : $param")
 
-        if (today.equals(param))
+        if (today.equals(param)) {
             return true
+        }
 
         return false
     }
@@ -101,14 +107,15 @@ open class DateInfo {
         val mSimpleDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.KOREA)
         val yesterdate = Date(System.currentTimeMillis() - (24 * 60 * 60 * 1000))
 
-        var date01 = mSimpleDateFormat.format(yesterdate) //오늘날짜
+        var date01 = mSimpleDateFormat.format(yesterdate) // 오늘날짜
 //        //Log.d("DateInfo", "어제날짜 date01 : $date01")
 
         var param = mSimpleDateFormat.format(date) // 전달받은날짜
 //        //Log.d("DateInfo", "전달받은날짜 param : $param")
 
-        if (date01.equals(param))
+        if (date01.equals(param)) {
             return true
+        }
 
         return false
     }
@@ -126,8 +133,10 @@ open class DateInfo {
      * 현재 시간과 전달받은 날짜가 며칠 차이 나는지 체크한다.
      * basicDays : 날짜 차이
      */
-    open fun getDates(date: String, basicDays: Int): Boolean {
-
+    open fun getDates(
+        date: String,
+        basicDays: Int,
+    ): Boolean {
         var daysValue = (1000 * 60 * 60 * 24) // 하루를 long으로 변환
 
         var writeDate = DateInfo().stringToDate(date) // 공지작성일
@@ -139,8 +148,9 @@ open class DateInfo {
 
         var days = ((todayValue - writeDateValue) / daysValue)
 
-        if (days > basicDays)
+        if (days > basicDays) {
             isNew = false
+        }
 
         return isNew
     }
@@ -162,7 +172,6 @@ open class DateInfo {
      * VID_19700107_022111.mp4 를 long 형의 시간값으로 변환한다.
      */
     open fun getFileToCreateTime(fileName: String): Long {
-
         val dt = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.KOREA)
         var date = dt.parse(fileName)
 

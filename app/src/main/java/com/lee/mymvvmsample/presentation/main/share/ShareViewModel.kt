@@ -7,10 +7,12 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class ShareViewModel @Inject constructor() : BaseViewModel() {
-
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is send Fragment"
+class ShareViewModel
+    @Inject
+    constructor() : BaseViewModel() {
+        private val _text =
+            MutableLiveData<String>().apply {
+                value = "This is send Fragment"
+            }
+        val text: LiveData<String> = _text
     }
-    val text: LiveData<String> = _text
-}

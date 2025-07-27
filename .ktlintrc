@@ -1,0 +1,4 @@
+[*.{kt,kts}]
+# ktlint rules
+disabled_rules=import-ordering
+experimental_rules=no-wildcard-imports 

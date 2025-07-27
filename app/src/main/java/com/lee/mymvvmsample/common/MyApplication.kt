@@ -8,7 +8,7 @@ import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
 
 @HiltAndroidApp
-class MyApplication: Application() {
+class MyApplication : Application() {
     companion object {
         var mContext: Context? = null
     }
@@ -58,7 +58,7 @@ class MyApplication: Application() {
 //            ImageLoader(get())
 //        }
 //
-////        single { MainViewModel(get()) } // 싱글톤 뷰모델 생성.
+// //        single { MainViewModel(get()) } // 싱글톤 뷰모델 생성.
 //        viewModel { MainViewModel(get()) }
 //        viewModel { HomeViewModel(get()) }
 //        viewModel { ShareViewModel(get()) }

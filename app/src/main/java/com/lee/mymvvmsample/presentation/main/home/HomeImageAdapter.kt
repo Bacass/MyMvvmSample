@@ -15,14 +15,15 @@ import timber.log.Timber
 
 class HomeImageAdapter(val listener: OnClickHandler) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
     lateinit var imageLoader: ImageLoader
 
     private var itemList = mutableListOf<Image>()
     private var itemWidth = 150
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): RecyclerView.ViewHolder {
         imageLoader = ImageLoader(parent.context)
 
         itemWidth = (DeviceInfo.getDeviceWidth(parent.context) - 40f.toPixel(parent.context)) / 3
@@ -32,14 +33,17 @@ class HomeImageAdapter(val listener: OnClickHandler) :
                 LayoutInflater.from(parent.context),
                 R.layout.item_home,
                 parent,
-                false
-            )
+                false,
+            ),
         )
     }
 
     override fun getItemCount(): Int = itemList.size
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: RecyclerView.ViewHolder,
+        position: Int,
+    ) {
         when (holder) {
             is ItemViewHolder -> {
                 holder.bind(itemList[position], position)
@@ -61,7 +65,10 @@ class HomeImageAdapter(val listener: OnClickHandler) :
 
     inner class ItemViewHolder(private val binding: ItemHomeBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: Image, position: Int) {
+        fun bind(
+            item: Image,
+            position: Int,
+        ) {
             binding.llContents.layoutParams = LinearLayout.LayoutParams(itemWidth, itemWidth)
 
             imageLoader.imageLoadWithURL(item.previewURL, binding.ivContent)

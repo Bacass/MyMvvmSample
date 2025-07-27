@@ -3,6 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
+    id 'org.jlleitschuh.gradle.ktlint'
 }
 
 android {
@@ -91,3 +92,18 @@ dependencies {
     // Architectural Components
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.3"
 }
+
+// ktlint 설정
+ktlint {
+    android = true
+    verbose = true
+    filter {
+        exclude { element -> element.file.path.contains("build/") }
+    }
+    disabledRules = ["import-ordering", "no-wildcard-imports"]
+    experimental {
+        noWildcardImports = false
+    }
+}
+
+

@@ -75,5 +75,5 @@ data class ImageHits(
     val user: String,
     @Expose
     @SerializedName("userImageURL")
-    val userImageURL: String
+    val userImageURL: String,
 )

@@ -6,6 +6,6 @@ interface ImageRepository {
     suspend fun searchImages(
         query: String,
         page: Int,
-        perPage: Int
+        perPage: Int,
     ): Result<ImageSearchResult>
-} 
+}

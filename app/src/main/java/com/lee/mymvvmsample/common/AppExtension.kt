@@ -14,8 +14,11 @@ import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
-
-fun FragmentActivity.addFragment(fragment: Fragment, tag: String? = null, addBackStack: Boolean = false) {
+fun FragmentActivity.addFragment(
+    fragment: Fragment,
+    tag: String? = null,
+    addBackStack: Boolean = false,
+) {
     supportFragmentManager.beginTransaction().apply {
         setCustomAnimations(R.anim.slide_in_right, R.anim.slide_none)
         add(R.id.fragment_container, fragment, tag ?: fragment::class.java.simpleName)
@@ -24,7 +27,11 @@ fun FragmentActivity.addFragment(fragment: Fragment, tag: String? = null, addBac
     }
 }
 
-fun FragmentActivity.replaceFragment(fragment: Fragment, tag: String? = null, addBackStack: Boolean = false) {
+fun FragmentActivity.replaceFragment(
+    fragment: Fragment,
+    tag: String? = null,
+    addBackStack: Boolean = false,
+) {
     supportFragmentManager.beginTransaction().apply {
         replace(R.id.fragment_container, fragment, tag ?: fragment::class.java.simpleName)
         if (addBackStack) addToBackStack(null)
@@ -45,7 +52,6 @@ fun FragmentActivity.removeFragment() {
     }
 }
 
-
 fun Int.convertDpToPixel(context: Context): Float {
     val resources = context.resources
     val metrics = resources.displayMetrics
@@ -53,13 +59,17 @@ fun Int.convertDpToPixel(context: Context): Float {
 }
 
 fun Float.toPixel(context: Context?): Int {
-    return context?.let { (TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, this, it.resources.displayMetrics).toInt()) }
-            ?: 0
+    return context?.let {
+        (TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, this, it.resources.displayMetrics).toInt())
+    }
+        ?: 0
 }
 
 fun Float.toSpPixel(context: Context?): Int {
-    return context?.let { (TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, this, it.resources.displayMetrics).toInt()) }
-            ?: 0
+    return context?.let {
+        (TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, this, it.resources.displayMetrics).toInt())
+    }
+        ?: 0
 }
 
 fun Int.formatString(): String {
@@ -91,12 +101,17 @@ fun Long.formatDateString(): String {
  * 버튼 클릭 이벤트에는 이 함수를 적극적으로 이용해야 함.
  */
 fun View.setSafeOnClickListener(onSafeClick: (View) -> Unit) {
-    setOnClickListener(SafeClickListener {
-        onSafeClick(it)
-    })
+    setOnClickListener(
+        SafeClickListener {
+            onSafeClick(it)
+        },
+    )
 }
 
-fun EditText.editorActionListener(actionId: Int, callback: (String) -> Unit) {
+fun EditText.editorActionListener(
+    actionId: Int,
+    callback: (String) -> Unit,
+) {
     setOnEditorActionListener { _, _actionId, _ ->
         if (actionId == _actionId) {
             callback.invoke(text.toString())
@@ -107,17 +122,27 @@ fun EditText.editorActionListener(actionId: Int, callback: (String) -> Unit) {
 }
 
 fun EditText.textChangedListener(callback: (String) -> Unit) {
-    addTextChangedListener(object : TextWatcher {
-        override fun afterTextChanged(s: Editable?) {
+    addTextChangedListener(
+        object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+            }
 
-        }
+            override fun beforeTextChanged(
+                s: CharSequence?,
+                start: Int,
+                count: Int,
+                after: Int,
+            ) {
+            }
 
-        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
-        }
-
-        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            callback.invoke(s?.toString() ?: "")
-        }
-    })
+            override fun onTextChanged(
+                s: CharSequence?,
+                start: Int,
+                before: Int,
+                count: Int,
+            ) {
+                callback.invoke(s?.toString() ?: "")
+            }
+        },
+    )
 }

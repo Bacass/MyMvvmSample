@@ -6,16 +6,22 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor() : BaseViewModel() {
-    sealed class LoginResult {
-        object Success : LoginResult()
-        class Fail(val errorMsg: String) : LoginResult()
-        object NetworkError : LoginResult()
-        class ServerError(val errorMsg: String) : LoginResult()
-        class Update(val newVersion: String) : LoginResult()
-    }
+class MainViewModel
+    @Inject
+    constructor() : BaseViewModel() {
+        sealed class LoginResult {
+            object Success : LoginResult()
 
-    val loginResultEvent = SingleLiveEvent<LoginResult>()
+            class Fail(val errorMsg: String) : LoginResult()
+
+            object NetworkError : LoginResult()
+
+            class ServerError(val errorMsg: String) : LoginResult()
+
+            class Update(val newVersion: String) : LoginResult()
+        }
+
+        val loginResultEvent = SingleLiveEvent<LoginResult>()
 
 //    fun processVersion() {
 //        uiScope.launch {
@@ -36,4 +42,4 @@ class MainViewModel @Inject constructor() : BaseViewModel() {
 //            }
 //        }
 //    }
-}
+    }

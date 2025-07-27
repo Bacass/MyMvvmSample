@@ -9,9 +9,7 @@ import java.io.File
 import java.io.FileWriter
 import java.io.IOException
 
-
 class DeviceInfo {
-
     companion object {
         fun appVersionInfo(context: Context): String {
             var pi: PackageInfo? = null
@@ -24,7 +22,10 @@ class DeviceInfo {
             return "v " + pi?.versionName!!
         }
 
-        fun writeStringToFile(fileContents: String, fileName: String) {
+        fun writeStringToFile(
+            fileContents: String,
+            fileName: String,
+        ) {
             try {
                 var sPackage = MyApplication.mContext?.packageName
                 // to this path add a new directory path
@@ -33,8 +34,9 @@ class DeviceInfo {
 
                 var dir = File(sPath)
                 // create this directory if not already created
-                if (!dir.exists())
+                if (!dir.exists()) {
                     dir.mkdirs()
+                }
 
                 var out = FileWriter(File(sPath, fileName))
                 out.write(fileContents)
@@ -50,5 +52,4 @@ class DeviceInfo {
             return display.width
         }
     }
-
 }

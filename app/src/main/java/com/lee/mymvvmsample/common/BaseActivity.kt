@@ -12,7 +12,6 @@ import com.lee.mymvvmsample.R
  * 좌우 스크롤 Animation BaseActivity
  */
 abstract class BaseActivity : AppCompatActivity() {
-
     private var progressDialog: AppCompatDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {

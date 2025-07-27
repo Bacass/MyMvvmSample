@@ -22,11 +22,11 @@ data class Image(
     val comments: Int,
     val userId: Int,
     val user: String,
-    val userImageURL: String
+    val userImageURL: String,
 )
 
 data class ImageSearchResult(
     val total: Int,
     val totalHits: Int,
-    val images: List<Image>
-) 
+    val images: List<Image>,
+)

@@ -26,18 +26,14 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class RepositoryModule {
-    
     @Binds
     @Singleton
-    abstract fun bindImageRepository(
-        imageRepositoryImpl: ImageRepositoryImpl
-    ): ImageRepository
+    abstract fun bindImageRepository(imageRepositoryImpl: ImageRepositoryImpl): ImageRepository
 }
 
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
-
     @Provides
     fun provideOkHttpclient(): OkHttpClient {
         return OkHttpClient.Builder().apply {
@@ -52,26 +48,29 @@ object AppModule {
              * okhttp 4.3.1 버전으로 수정되면서 아래 내용을 수정했다.
              * 기존 내용은 주석처리함.
              */
-            addInterceptor(HttpLoggingInterceptor(object : HttpLoggingInterceptor.Logger {
-                override fun log(message: String) {
-                    if (!message.startsWith("{") && !message.startsWith("[")) {
-                        Timber.tag("OkHttp").d(message)
-                        return
-                    }
-                    try {
-                        Timber.tag("OkHttp").d(
-                            GsonBuilder().setPrettyPrinting().create().toJson(
-                                JsonParser().parse(message)
-                            )
-                        )
-                    } catch (m: JsonSyntaxException) {
-                        Timber.tag("OkHttp").d(message)
-                    }
-                }
-
-            }).apply {
-                level = HttpLoggingInterceptor.Level.BODY
-            })
+            addInterceptor(
+                HttpLoggingInterceptor(
+                    object : HttpLoggingInterceptor.Logger {
+                        override fun log(message: String) {
+                            if (!message.startsWith("{") && !message.startsWith("[")) {
+                                Timber.tag("OkHttp").d(message)
+                                return
+                            }
+                            try {
+                                Timber.tag("OkHttp").d(
+                                    GsonBuilder().setPrettyPrinting().create().toJson(
+                                        JsonParser().parse(message),
+                                    ),
+                                )
+                            } catch (m: JsonSyntaxException) {
+                                Timber.tag("OkHttp").d(message)
+                            }
+                        }
+                    },
+                ).apply {
+                    level = HttpLoggingInterceptor.Level.BODY
+                },
+            )
         }.build()
     }
 

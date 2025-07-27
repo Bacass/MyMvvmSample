@@ -45,25 +45,28 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     }
 
     private fun setEvent() {
-        viewModel.loginResultEvent.observe(this, Observer {
-            when (it) {
-                is MainViewModel.LoginResult.Success -> {
-                    Timber.e("LoginResult.Success")
+        viewModel.loginResultEvent.observe(
+            this,
+            Observer {
+                when (it) {
+                    is MainViewModel.LoginResult.Success -> {
+                        Timber.e("LoginResult.Success")
+                    }
+                    is MainViewModel.LoginResult.Update -> {
+                        Timber.e("LoginResult.Update ${it.newVersion}")
+                    }
+                    is MainViewModel.LoginResult.NetworkError -> {
+                        Timber.e("LoginResult.NetworkError")
+                    }
+                    is MainViewModel.LoginResult.ServerError -> {
+                        Timber.e("LoginResult.ServerError ${it.errorMsg}")
+                    }
+                    else -> {
+                        Timber.e("LoginResult.Success")
+                    }
                 }
-                is MainViewModel.LoginResult.Update -> {
-                    Timber.e("LoginResult.Update ${it.newVersion}")
-                }
-                is MainViewModel.LoginResult.NetworkError -> {
-                    Timber.e("LoginResult.NetworkError")
-                }
-                is MainViewModel.LoginResult.ServerError -> {
-                    Timber.e("LoginResult.ServerError ${it.errorMsg}")
-                }
-                else -> {
-                    Timber.e("LoginResult.Success")
-                }
-            }
-        })
+            },
+        )
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -89,7 +92,6 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             Handler().postDelayed({
                 mCloseApp = false
             }, 1000)
-            
         } else {
             super.onBackPressed()
             finishActivity()
