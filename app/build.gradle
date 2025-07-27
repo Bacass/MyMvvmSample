@@ -101,6 +101,11 @@ ktlint {
         exclude { element -> element.file.path.contains("build/") }
     }
     disabledRules = ["import-ordering", "no-wildcard-imports"]
+    reporters {
+        reporter "plain"
+        reporter "checkstyle"
+        reporter "html"
+    }
 }
 
 
