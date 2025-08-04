@@ -1,6 +1,8 @@
 # MyMvvmSample
 My kotlin MVVM Sample 
 
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/Bacass/MyMvvmSample)
+
 ### 기본구조 ###
 
 * Kotiln + MVVM + Retrofit2 + Gson + Glide + Koin
