@@ -1,8 +1,7 @@
 # MyMvvmSample
 My kotlin MVVM Sample 
 
-[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/Bacass/MyMvvmSample)
-## link: https://deepwiki.com/Bacass/MyMvvmSample
+# [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/Bacass/MyMvvmSample)
 
 ### 기본구조 ###
 
