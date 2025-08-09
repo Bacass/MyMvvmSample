@@ -5,6 +5,7 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.util.DisplayMetrics
 import android.view.WindowManager
+import androidx.window.layout.WindowMetricsCalculator
 
 class DeviceInfo {
     companion object {
@@ -25,11 +26,16 @@ class DeviceInfo {
         }
 
         fun getDeviceWidth(context: Context): Int {
-            val wm = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
-            val metrics = DisplayMetrics()
-            @Suppress("DEPRECATION")
-            wm.defaultDisplay.getMetrics(metrics)
-            return metrics.widthPixels
+            return try {
+                val windowMetrics = WindowMetricsCalculator.getOrCreate().computeCurrentWindowMetrics(context as android.app.Activity)
+                windowMetrics.bounds.width()
+            } catch (_: Exception) {
+                val wm = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+                val metrics = DisplayMetrics()
+                @Suppress("DEPRECATION")
+                wm.defaultDisplay.getMetrics(metrics)
+                metrics.widthPixels
+            }
         }
     }
 }

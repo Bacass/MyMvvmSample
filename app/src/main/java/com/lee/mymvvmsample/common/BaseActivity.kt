@@ -1,6 +1,7 @@
 package com.lee.mymvvmsample.common
 
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -28,7 +29,9 @@ abstract class BaseActivity : AppCompatActivity() {
 
     fun finishActivity() {
         finish()
-        overridePendingTransition(R.anim.slide_none, R.anim.slide_out_right)
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            overridePendingTransition(R.anim.slide_none, R.anim.slide_out_right)
+        }
     }
 
     fun showProgress() {

@@ -1,43 +1,58 @@
-# MyMvvmSample
-My kotlin MVVM Sample 
+## MyMvvmSample
+Kotlin + MVVM 샘플 프로젝트
 
-# [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/Bacass/MyMvvmSample)
+## 멀티 모듈 구조
+- app: Presentation(UI)
+  - Activity/Fragment/ViewModel, Hilt 진입점
+  - DI 바인딩: `CookieStorageImpl -> CookieStorage`, `UserPreferencesImpl -> UserPreferences`
+- data: Data layer
+  - Retrofit/OkHttp/Interceptor, DTO/Mapper, Repository 구현
+  - DI 모듈: `NetworkModule`, `RepositoryModule`
+- domain: Domain layer
+  - UseCase, Repository 인터페이스, Domain Model, Failure/Either, Preferences 인터페이스
 
-### 기본구조 ###
+의존성 방향
+- app → domain, app → data, data → domain (domain은 어떤 모듈에도 의존하지 않음)
 
-* Kotiln + MVVM + Retrofit2 + Gson + Glide + Koin
-* api 는 NetworkService.kt 파일에서 추가한 후 NetworkRepository.kt 파일에서 한번 더 작업한 것을 사용하는 구조입니다.
-* 의존성주입(DI) 는 Koin 을 이용했습니다.
-* 새로운 ViewModel 을 추가할때마다 MyApplication.kt 에서 ViewModel 을 등록해줘야 합니다.
-* SharedPreference 는 kotpref 를 이용했습니다.
-* Log 는 Timber 를 이용했습니다.
+## DI(Hilt)
+- Application: `@HiltAndroidApp` MyApplication
+- app 모듈: `AppModule`
+  - `@Binds` CookieStorageImpl, UserPreferencesImpl
+- data 모듈: `NetworkModule`, `RepositoryModule`
+  - OkHttpClient/Retrofit/ImageApiService 제공, ImageRepository 바인딩
 
-### 코딩 컨벤션 ###
+## 에러 모델 표준화
+- Failure(sealed class)
+  - Network, Server(code,message), NoData, InvalidInput(message), Unknown(message)
+- Either<L, R>
+  - Left(Failure) / Right(Success)
+- Repository/UseCase 서명
+  - `Either<Failure, Result>`로 일관화
 
-* Android Studio 디폴트 포맷을 사용합니다.
-* 클래스,변수,함수등 명명 방법은 카멜케이스를 따라주세요.
+## 네트워크
+- Retrofit with OkHttp + Gson
+- Sandwich ApiResponse 사용
+  - ApiService: `suspend fun ...(): ApiResponse<DTO>`
+  - Repository: ApiResponse 분기 → Either(Failure/Success) 변환
 
-### 깃 운영 플로우 ###
+## UI 상태 관리
+- ViewModel: StateFlow 기반 `UiState`
+- Fragment: `repeatOnLifecycle(STARTED)`로 수집
 
-* 마스터 브랜치는 항상 컴파일에러 없이 빌드성공 가능한 상태로 커밋해주세요.
-* 작업은 최대한 브랜치를 생성해서 작업하고, 결과물만 마스터로 머지해주세요.
-* 마스터에 브랜치 머지후에 특별한 이유 없으면 해당 브랜치는 항상 제거 해주세요.
+## 환경설정/스토리지
+- CookieStorage(인터페이스, data에 정의) ↔ CookieStorageImpl(app, AppPrefs 사용)
+- UserPreferences(인터페이스, domain에 정의) ↔ UserPreferencesImpl(app, AppPrefs 사용)
 
-### 커밋 로그 컨벤션 ###
+## 로깅/이미지/기타
+- Timber, Glide, Kotpref
 
-* '커밋 타입:내용' 형식으로 커밋로그를 남길것
-* 커밋 타입
-	- feat: 새 기능, 기존 기능 개선, 버그수정.
-	- doc: 문서, 주석
-	- res: 코드외에 리소스만 추가/수정인 경우(주로 res, assets 폴더쪽)
-* 예시1 feat: 날짜 변환 로직 추가
-* 예시2 doc: 기획문서 업데이트.
+## 개발 규칙(요약)
+- MVVM + UseCase + Repository + Mapper
+- 도메인 순수 Kotlin, 외부/프레임워크 의존 차단
+- 멀티 모듈로 경계 강제
+- 빌드타입별 서버/키는 BuildConfig로 주입
 
-### !!! ###
-* 위 내용을 최대한 지켜가며 작업해주세요.
-* 위 내용은 언제든 추가/수정 가능합니다.
+## 기여 가이드
+- 브랜치 전략: 기능별 브랜치 → PR → 머지 후 브랜치 정리
+- 커밋 컨벤션: `feat|fix|refactor|docs|chore: 내용`
 
-### ###
-<div>
-<img src="https://user-images.githubusercontent.com/23072075/80856672-cbbeb200-8c86-11ea-88cd-259416be19df.gif" width="30%"></img>
-</div>
