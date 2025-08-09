@@ -1,0 +1,26 @@
+[
+    {
+        "merged": "com.lee.mymvvmsample.data-release-12:/animator/fragment_open_exit.xml",
+        "source": "com.lee.mymvvmsample.data-fragment-1.5.1-2:/animator/fragment_open_exit.xml"
+    },
+    {
+        "merged": "com.lee.mymvvmsample.data-release-12:/animator/fragment_fade_exit.xml",
+        "source": "com.lee.mymvvmsample.data-fragment-1.5.1-2:/animator/fragment_fade_exit.xml"
+    },
+    {
+        "merged": "com.lee.mymvvmsample.data-release-12:/animator/fragment_close_exit.xml",
+        "source": "com.lee.mymvvmsample.data-fragment-1.5.1-2:/animator/fragment_close_exit.xml"
+    },
+    {
+        "merged": "com.lee.mymvvmsample.data-release-12:/animator/fragment_fade_enter.xml",
+        "source": "com.lee.mymvvmsample.data-fragment-1.5.1-2:/animator/fragment_fade_enter.xml"
+    },
+    {
+        "merged": "com.lee.mymvvmsample.data-release-12:/animator/fragment_open_enter.xml",
+        "source": "com.lee.mymvvmsample.data-fragment-1.5.1-2:/animator/fragment_open_enter.xml"
+    },
+    {
+        "merged": "com.lee.mymvvmsample.data-release-12:/animator/fragment_close_enter.xml",
+        "source": "com.lee.mymvvmsample.data-fragment-1.5.1-2:/animator/fragment_close_enter.xml"
+    }
+]

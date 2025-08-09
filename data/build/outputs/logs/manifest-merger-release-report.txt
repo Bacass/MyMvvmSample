@@ -1,0 +1,19 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /Users/wonwoo/Documents/Workspace_01/MyMvvmSample/data/src/main/AndroidManifest.xml:2:1-4:12
+INJECTED from /Users/wonwoo/Documents/Workspace_01/MyMvvmSample/data/src/main/AndroidManifest.xml:2:1-4:12
+	package
+		ADDED from /Users/wonwoo/Documents/Workspace_01/MyMvvmSample/data/src/main/AndroidManifest.xml:2:11-46
+		INJECTED from /Users/wonwoo/Documents/Workspace_01/MyMvvmSample/data/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /Users/wonwoo/Documents/Workspace_01/MyMvvmSample/data/src/main/AndroidManifest.xml:2:47-105
+application
+ADDED from /Users/wonwoo/Documents/Workspace_01/MyMvvmSample/data/src/main/AndroidManifest.xml:3:5-20
+uses-sdk
+INJECTED from /Users/wonwoo/Documents/Workspace_01/MyMvvmSample/data/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /Users/wonwoo/Documents/Workspace_01/MyMvvmSample/data/src/main/AndroidManifest.xml
+INJECTED from /Users/wonwoo/Documents/Workspace_01/MyMvvmSample/data/src/main/AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from /Users/wonwoo/Documents/Workspace_01/MyMvvmSample/data/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /Users/wonwoo/Documents/Workspace_01/MyMvvmSample/data/src/main/AndroidManifest.xml

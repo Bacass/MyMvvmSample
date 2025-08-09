@@ -1,0 +1,6 @@
+[
+    {
+        "merged": "com.lee.mymvvmsample.data-release-12:/drawable-v21/notification_action_background.xml",
+        "source": "com.lee.mymvvmsample.data-core-1.8.0-1:/drawable-v21/notification_action_background.xml"
+    }
+]
