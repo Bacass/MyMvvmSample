@@ -13,49 +13,37 @@ open class DateInfo {
     }
 
     open fun dateToStringDate(date: Date): String {
-        var transFormat = SimpleDateFormat("yyyy년MM월dd일")
-
-        var result = transFormat.format(date)
-
-        return result
+        val transFormat = SimpleDateFormat("yyyy년MM월dd일", Locale.KOREA)
+        return transFormat.format(date)
     }
 
     open fun dateToStringTime(date: Date): String {
-        var transFormat = SimpleDateFormat("a h:mm")
-
-        var result = transFormat.format(date)
-
-        result.replace("AM", "오전")
-        result.replace("PM", "오후")
-
-        return result
+        val transFormat = SimpleDateFormat("a h:mm", Locale.KOREA)
+        return transFormat.format(date)
     }
 
     open fun getTodayTime(): String {
-        var transFormat = SimpleDateFormat("yyyyMMdd HH:mm:ss")
-
+        val transFormat = SimpleDateFormat("yyyyMMdd HH:mm:ss", Locale.KOREA)
         return transFormat.format(Date())
     }
 
     open fun getTodayDate04(): String {
-        var transFormat = SimpleDateFormat("YYYY-MM-dd")
+        val transFormat = SimpleDateFormat("yyyy-MM-dd", Locale.KOREA)
         return transFormat.format(Date())
     }
 
     open fun getTodayTime02(): String {
-        var transFormat = SimpleDateFormat("YYYYMMddhhmmss")
-
+        val transFormat = SimpleDateFormat("yyyyMMddHHmmss", Locale.KOREA)
         return transFormat.format(Date())
     }
 
     open fun getTodayTime03(): String {
-        var transFormat = SimpleDateFormat("YYYY.MM.dd")
-
+        val transFormat = SimpleDateFormat("yyyy.MM.dd", Locale.KOREA)
         return transFormat.format(Date())
     }
 
     open fun getTodayDate(): String {
-        var transFormat = SimpleDateFormat("YYYYMMdd")
+        val transFormat = SimpleDateFormat("yyyyMMdd", Locale.KOREA)
         return transFormat.format(Date())
     }
 
@@ -122,7 +110,7 @@ open class DateInfo {
 
     open fun stringToDate(str: String): Date {
         val dt = SimpleDateFormat("yyyy-MM-dd", Locale.KOREA)
-        return dt.parse(str)
+        return dt.parse(str) ?: Date()
     }
 
     open fun getToday(): Date {
@@ -173,9 +161,7 @@ open class DateInfo {
      */
     open fun getFileToCreateTime(fileName: String): Long {
         val dt = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.KOREA)
-        var date = dt.parse(fileName)
-
-        // Timber.d("Real fileName: $fileName, time: ${date.time}, date:${dateToStringDate(systemTimeToDate(date.time))}")
+        val date = dt.parse(fileName) ?: return 0L
         return date.time
     }
 }

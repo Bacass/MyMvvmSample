@@ -6,6 +6,8 @@ import com.lee.mymvvmsample.domain.model.ImageSearchResult
 import com.lee.mymvvmsample.domain.model.Either
 import com.lee.mymvvmsample.domain.model.Failure
 import com.lee.mymvvmsample.domain.repository.ImageRepository
+import com.skydoves.sandwich.ApiResponse
+import com.skydoves.sandwich.message
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -19,27 +21,29 @@ class ImageRepositoryImpl @Inject constructor(
         page: Int,
         perPage: Int,
     ): Either<Failure, ImageSearchResult> {
-        return try {
-            val response = apiService.searchImage(
-                key = com.lee.mymvvmsample.data.BuildConfig.PIXABAY_KEY,
-                q = query,
-                imageType = "photo",
-                page = page,
-                perPage = perPage,
-            )
+        val response = apiService.searchImage(
+            key = com.lee.mymvvmsample.data.BuildConfig.PIXABAY_KEY,
+            q = query,
+            imageType = "photo",
+            page = page,
+            perPage = perPage,
+        )
 
-            if (response.isSuccessful) {
-                val imageSearchResult = imageMapper.mapToDomain(response.body())
+        return when (response) {
+            is ApiResponse.Success -> {
+                val imageSearchResult = imageMapper.mapToDomain(response.data)
                 if (imageSearchResult.images.isEmpty()) {
                     Either.Left(Failure.NoData)
                 } else {
                     Either.Right(imageSearchResult)
                 }
-            } else {
-                Either.Left(Failure.Server(response.code(), response.message()))
             }
-        } catch (e: Exception) {
-            Either.Left(Failure.Unknown(e.message))
+            is ApiResponse.Failure.Error -> {
+                Either.Left(Failure.Server(response.statusCode.code, response.message()))
+            }
+            is ApiResponse.Failure.Exception -> {
+                Either.Left(Failure.Unknown(response.message))
+            }
         }
     }
 }

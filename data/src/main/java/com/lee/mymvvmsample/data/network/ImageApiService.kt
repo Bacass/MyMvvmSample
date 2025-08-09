@@ -1,7 +1,7 @@
 package com.lee.mymvvmsample.data.network
 
 import com.lee.mymvvmsample.data.model.ImageObj
-import retrofit2.Response
+import com.skydoves.sandwich.ApiResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -13,7 +13,7 @@ interface ImageApiService {
         @Query("image_type") imageType: String,
         @Query("page") page: Int,
         @Query("per_page") perPage: Int,
-    ): Response<ImageObj>
+    ): ApiResponse<ImageObj>
 }
 
 
