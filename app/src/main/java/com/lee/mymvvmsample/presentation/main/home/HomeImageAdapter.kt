@@ -7,26 +7,33 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.lee.mymvvmsample.R
 import com.lee.mymvvmsample.common.toPixel
-import com.lee.mymvvmsample.common.utils.DeviceInfo
 import com.lee.mymvvmsample.common.utils.ImageLoader
 import com.lee.mymvvmsample.databinding.ItemHomeBinding
 import com.lee.mymvvmsample.domain.model.Image
 import timber.log.Timber
 
-class HomeImageAdapter(val listener: OnClickHandler) :
+class HomeImageAdapter(
+    private val listener: OnClickHandler,
+    private val imageLoader: ImageLoader,
+) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    lateinit var imageLoader: ImageLoader
-
     private var itemList = mutableListOf<Image>()
-    private var itemWidth = 150
+
+    private var itemWidth = DEFAULT_ITEM_WIDTH
+
+    companion object {
+        private const val DEFAULT_ITEM_WIDTH = 150
+        private const val ITEM_MARGIN_DP = 40f
+        private const val GRID_SPAN_COUNT = 3
+    }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
     ): RecyclerView.ViewHolder {
-        imageLoader = ImageLoader(parent.context)
-
-        itemWidth = (DeviceInfo.getDeviceWidth(parent.context) - 40f.toPixel(parent.context)) / 3
+        val screenWidth = parent.resources.displayMetrics.widthPixels
+        val totalMarginPx = ITEM_MARGIN_DP.toPixel(parent.context)
+        itemWidth = (screenWidth - totalMarginPx) / GRID_SPAN_COUNT
 
         return ItemViewHolder(
             DataBindingUtil.inflate(

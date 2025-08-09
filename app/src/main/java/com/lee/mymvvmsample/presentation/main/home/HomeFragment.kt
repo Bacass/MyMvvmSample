@@ -16,6 +16,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.lee.mymvvmsample.R
+import com.lee.mymvvmsample.common.utils.ImageLoader
 import com.lee.mymvvmsample.databinding.FragmentHomeBinding
 import com.lee.mymvvmsample.presentation.main.MainActivity
 import com.lee.mymvvmsample.presentation.viewmodel.HomeViewModel
@@ -53,7 +54,7 @@ class HomeFragment : Fragment(), OnClickHandler {
                         Toast.makeText(context, getString(R.string.received_data_msg), Toast.LENGTH_SHORT).show()
 
                         if (imageAdapter == null) {
-                            imageAdapter = HomeImageAdapter(this@HomeFragment)
+                            imageAdapter = HomeImageAdapter(this@HomeFragment, ImageLoader(requireContext()))
                             binding?.rcList?.adapter = imageAdapter
                         }
                         imageAdapter?.initItem(viewModel.imageList.toList())
@@ -118,5 +119,12 @@ class HomeFragment : Fragment(), OnClickHandler {
             activity?.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
         } catch (e: ActivityNotFoundException) {
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding?.rcList?.adapter = null
+        binding = null
+        imageAdapter = null
     }
 }
