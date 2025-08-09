@@ -1,7 +1,6 @@
 package com.lee.mymvvmsample.common
 
 import android.app.Application
-import android.content.Context
 import com.chibatching.kotpref.Kotpref
 import com.lee.mymvvmsample.BuildConfig
 import dagger.hilt.android.HiltAndroidApp
@@ -9,9 +8,6 @@ import timber.log.Timber
 
 @HiltAndroidApp
 class MyApplication : Application() {
-    companion object {
-        var mContext: Context? = null
-    }
 
 //    private val appModules = module {
 //        single<NetworkService> {
@@ -67,8 +63,6 @@ class MyApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-
-        mContext = this
 
         /**
          * 로그를 표시함.

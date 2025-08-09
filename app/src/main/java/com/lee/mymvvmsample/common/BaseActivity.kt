@@ -32,32 +32,24 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     fun showProgress() {
-        try {
-            hideProgress()
-            progressDialog = AppCompatDialog(this, R.style.ProgressDialogTheme)
-            progressDialog?.let {
-                it.setContentView(R.layout.common_progress)
-                it.setCancelable(false)
-                it.setCanceledOnTouchOutside(false)
-                it.window?.setDimAmount(0.0f)
-                it.show()
-            }
-        } catch (e: Exception) {
+        hideProgress()
+        progressDialog = AppCompatDialog(this, R.style.ProgressDialogTheme)
+        progressDialog?.let {
+            it.setContentView(R.layout.common_progress)
+            it.setCancelable(false)
+            it.setCanceledOnTouchOutside(false)
+            it.window?.setDimAmount(0.0f)
+            it.show()
         }
     }
 
     fun hideProgress() {
-        progressDialog?.let {
-            try {
-                it.dismiss()
-            } catch (e: Exception) {
-            }
-            progressDialog = null
-        }
+        progressDialog?.dismiss()
+        progressDialog = null
     }
 
     fun hideKeyboard(v: View) {
-        var imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(v.windowToken, 0)
     }
 }

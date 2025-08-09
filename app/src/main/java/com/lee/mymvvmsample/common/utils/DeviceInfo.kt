@@ -1,55 +1,35 @@
 package com.lee.mymvvmsample.common.utils
 
 import android.content.Context
-import android.content.pm.PackageInfo
-import android.os.Environment
+import android.content.pm.PackageManager
+import android.os.Build
+import android.util.DisplayMetrics
 import android.view.WindowManager
-import com.lee.mymvvmsample.common.MyApplication
-import java.io.File
-import java.io.FileWriter
-import java.io.IOException
 
 class DeviceInfo {
     companion object {
         fun appVersionInfo(context: Context): String {
-            var pi: PackageInfo? = null
-            try {
-                pi = context.packageManager.getPackageInfo(context.packageName, 0)
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-
-            return "v " + pi?.versionName!!
-        }
-
-        fun writeStringToFile(
-            fileContents: String,
-            fileName: String,
-        ) {
-            try {
-                var sPackage = MyApplication.mContext?.packageName
-                // to this path add a new directory path
-                var sPath =
-                    Environment.getExternalStorageDirectory().absolutePath + "/Android/data/" + sPackage + "/logs/"
-
-                var dir = File(sPath)
-                // create this directory if not already created
-                if (!dir.exists()) {
-                    dir.mkdirs()
+            return try {
+                val pm: PackageManager = context.packageManager
+                val pkg = context.packageName
+                val versionName = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    pm.getPackageInfo(pkg, PackageManager.PackageInfoFlags.of(0)).versionName
+                } else {
+                    @Suppress("DEPRECATION")
+                    pm.getPackageInfo(pkg, 0).versionName
                 }
-
-                var out = FileWriter(File(sPath, fileName))
-                out.write(fileContents)
-                out.close()
-            } catch (e: IOException) {
-                e.printStackTrace()
+                "v $versionName"
+            } catch (_: Exception) {
+                "v"
             }
         }
 
         fun getDeviceWidth(context: Context): Int {
-            val display = (context.getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay
-
-            return display.width
+            val wm = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+            val metrics = DisplayMetrics()
+            @Suppress("DEPRECATION")
+            wm.defaultDisplay.getMetrics(metrics)
+            return metrics.widthPixels
         }
     }
 }

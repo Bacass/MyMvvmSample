@@ -1,6 +1,7 @@
 package com.lee.mymvvmsample.common.di
 
 import com.google.gson.GsonBuilder
+import com.google.gson.JsonElement
 import com.google.gson.JsonParser
 import com.google.gson.JsonSyntaxException
 import com.lee.mymvvmsample.BuildConfig
@@ -57,12 +58,12 @@ object AppModule {
                                 return
                             }
                             try {
-                                Timber.tag("OkHttp").d(
-                                    GsonBuilder().setPrettyPrinting().create().toJson(
-                                        JsonParser().parse(message),
-                                    ),
-                                )
-                            } catch (m: JsonSyntaxException) {
+                                val element: JsonElement =
+                                    runCatching { JsonParser.parseString(message) }
+                                        .getOrNull() ?: return
+                                val pretty = GsonBuilder().setPrettyPrinting().create().toJson(element)
+                                Timber.tag("OkHttp").d(pretty)
+                            } catch (_: JsonSyntaxException) {
                                 Timber.tag("OkHttp").d(message)
                             }
                         }

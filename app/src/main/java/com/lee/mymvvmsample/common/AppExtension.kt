@@ -73,26 +73,18 @@ fun Float.toSpPixel(context: Context?): Int {
 }
 
 fun Int.formatString(): String {
-    try {
-        return DecimalFormat("#,###").format(this.toDouble())
-    } catch (e: Exception) {
-    }
-    return this.toString()
+    return runCatching { DecimalFormat("#,###").format(this.toDouble()) }
+        .getOrDefault(this.toString())
 }
 
 fun Long.formatString(): String {
-    try {
-        return DecimalFormat("#,###").format(this.toDouble())
-    } catch (e: Exception) {
-    }
-    return this.toString()
+    return runCatching { DecimalFormat("#,###").format(this.toDouble()) }
+        .getOrDefault(this.toString())
 }
 
 fun Long.formatDateString(): String {
-    var date = Date(this)
-
-    var transFormat = SimpleDateFormat("yyyy.MM.dd HH:mm:ss")
-
+    val date = Date(this)
+    val transFormat = SimpleDateFormat("yyyy.MM.dd HH:mm:ss", Locale.getDefault())
     return transFormat.format(date)
 }
 
