@@ -1,0 +1,63 @@
+MyMvvmSample 앱 분석 요약
+
+1) 전체 구조
+- presentation: Activity/Fragment + ViewModel(Hilt) 계층
+- domain: usecase, repository interface, domain model
+- data: repository 구현, network(Retrofit/OkHttp), DTO, mapper
+- common: BaseActivity, BaseViewModel, 확장함수/유틸, MyApplication, DI 모듈
+
+2) 아키텍처
+- MVVM + UseCase + Repository 분리
+- 흐름: View(Fragment) → ViewModel → UseCase → Repository(interface) → RepositoryImpl → ApiService
+- Mapper가 DTO ↔ 도메인 모델 변환 책임
+- 코루틴으로 비동기 처리, LiveData/SingleLiveEvent로 UI 이벤트 전달
+
+3) DI(Hilt)
+- @HiltAndroidApp: MyApplication
+- @Module @InstallIn(SingletonComponent):
+  - RepositoryModule: @Binds 로 ImageRepositoryImpl → ImageRepository
+  - AppModule: OkHttpClient, Retrofit, ImageApiService @Provides/@Singleton
+- ViewModel: @HiltViewModel + @Inject constructor(...)
+
+4) 네트워크 계층
+- Retrofit + OkHttp + Gson
+- BuildConfig.SERVER_HTTP_URL 로 baseUrl 주입(빌드타입별 설정)
+- AddCookieInterceptor/ReceivedCookieInterceptor 로 쿠키 주입/수신
+- HttpLoggingInterceptor 로 JSON pretty 로그(Timber)
+
+5) UI/네비게이션
+- 싱글 액티비티(MainActivity) + 다중 프래그먼트(Home/Gallery/Share)
+- 확장함수 addFragment/replaceFragment 로 전환 애니메이션/백스택 처리
+- DataBinding/ViewBinding 사용, RecyclerView 는 Adapter 로 바인딩
+
+6) 핵심 시나리오(Home 검색)
+- IME_ACTION_SEARCH → HomeViewModel.onClickSearch()
+- SearchImagesUseCase → ImageRepository.searchImages → ImageApiService.searchImage
+- ImageMapper 로 도메인 변환 → SingleLiveEvent 로 Success/Fail/NetworkError 알림
+- Fragment 가 옵저빙 후 Adapter 갱신
+
+7) 라이브러리/빌드
+- Hilt(Dagger), Retrofit/OkHttp/Gson, Glide, Kotpref, Timber, Sandwich(콜어댑터 세팅됨)
+- compileSdk 35, Kotlin/JVM 17, ktlint 적용
+
+8) 사용자 코딩 규칙 준수 평가(요지)
+- val 지향: 대체로 양호하나 일부 var 개선 여지
+- 뷰홀더 lateinit 지양: 어댑터에 lateinit 존재(개선 권장)
+- 터치 이벤트 바인드 시점: ViewHolder.bind()에서 처리 OK
+- 접두사 지양: 일부 mBinding/mCloseApp 사용(정리 여지)
+- 복수형 변수명: itemList 사용 OK
+- 매직넘버: 40f 등 상수화 필요
+- companion object 위치: 일부 상단 선언 존재(이동 권장)
+- 불필요 try/catch: 빈 catch 존재(정리 권장)
+- strings/dimens 유틸: 현재 미사용(정책에 맞게 적용 여부 검토)
+
+9) 개선 포인트(우선순위)
+- (P1) ViewModel 코루틴 스코프를 viewModelScope 로 통일, BaseViewModel 간소화
+- (P1) HomeImageAdapter 의 lateinit 제거, 매직넘버 상수화, 생성자 주입
+- (P1) HomeFragment 바인딩 누수 방지(onDestroyView 에서 null 처리)
+- (P2) MyApplication 의 전역 Context 제거 및 사용부 리팩토링
+- (P2) DeviceInfo 의 deprecated API 대체, 파일 접근/권한 전략 점검
+- (P2) 빈 try/catch 제거 또는 명시적 처리/로그 추가
+- (P3) Sandwich 호출 스타일 통일(사용 or 제거), 네이밍 접두사 정리
+
+
