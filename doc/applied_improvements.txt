@@ -1,0 +1,31 @@
+적용된 개선사항 요약
+
+P1
+- ViewModel 스코프 통일: BaseViewModel.uiScope → viewModelScope
+- HomeImageAdapter 개선:
+  - lateinit 제거, ImageLoader 생성자 주입으로 변경
+  - 매직넘버 상수화: DEFAULT_ITEM_WIDTH, ITEM_MARGIN_DP, GRID_SPAN_COUNT
+  - 화면 너비 계산을 displayMetrics.widthPixels 기반으로 변경
+- HomeFragment: onDestroyView()에서 adapter/binding 해제로 누수 방지
+
+P2
+- 전역 컨텍스트 제거: MyApplication의 companion object mContext 삭제
+- DeviceInfo 현대화:
+  - 버전명 조회 API 레벨 호환 처리(PackageManager, TIRAMISU 분기)
+  - getDeviceWidth에서 deprecated API 제거 → DisplayMetrics 사용
+  - 외부저장소 직접 쓰기 로직 제거 및 전역 컨텍스트 의존 해소
+- 불필요 try/catch 정리:
+  - BaseActivity.showProgress()/hideProgress() 빈 catch 제거 및 로직 단순화
+  - AppExtension 숫자/날짜 포맷팅 runCatching 사용, Locale.getDefault() 지정
+
+P3
+- MainActivity 현대화:
+  - 네이밍 정리: mBinding/mCloseApp → binding/isExitPending
+  - 백프레스 처리: onBackPressed()/Handler 제거 → OnBackPressedDispatcher + lifecycleScope
+- OkHttp 로깅 개선:
+  - JsonParser() 생성자 사용 제거 → JsonParser.parseString + runCatching로 pretty 로그 출력
+
+비고
+- Retrofit 응답 처리(Sandwich ApiResponse 통일 적용)는 미적용 상태(향후 적용 가능)
+- 린트 오류 없음, assembleDebug 빌드 성공
+
