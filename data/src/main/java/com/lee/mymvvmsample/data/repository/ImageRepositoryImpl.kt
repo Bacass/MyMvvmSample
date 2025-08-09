@@ -3,6 +3,8 @@ package com.lee.mymvvmsample.data.repository
 import com.lee.mymvvmsample.data.mapper.ImageMapper
 import com.lee.mymvvmsample.data.network.ImageApiService
 import com.lee.mymvvmsample.domain.model.ImageSearchResult
+import com.lee.mymvvmsample.domain.model.Either
+import com.lee.mymvvmsample.domain.model.Failure
 import com.lee.mymvvmsample.domain.repository.ImageRepository
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -16,7 +18,7 @@ class ImageRepositoryImpl @Inject constructor(
         query: String,
         page: Int,
         perPage: Int,
-    ): Result<ImageSearchResult> {
+    ): Either<Failure, ImageSearchResult> {
         return try {
             val response = apiService.searchImage(
                 key = com.lee.mymvvmsample.data.BuildConfig.PIXABAY_KEY,
@@ -28,12 +30,16 @@ class ImageRepositoryImpl @Inject constructor(
 
             if (response.isSuccessful) {
                 val imageSearchResult = imageMapper.mapToDomain(response.body())
-                Result.success(imageSearchResult)
+                if (imageSearchResult.images.isEmpty()) {
+                    Either.Left(Failure.NoData)
+                } else {
+                    Either.Right(imageSearchResult)
+                }
             } else {
-                Result.failure(Exception("네트워크 오류가 발생했습니다"))
+                Either.Left(Failure.Server(response.code(), response.message()))
             }
         } catch (e: Exception) {
-            Result.failure(e)
+            Either.Left(Failure.Unknown(e.message))
         }
     }
 }

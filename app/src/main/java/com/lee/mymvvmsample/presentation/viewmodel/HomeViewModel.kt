@@ -4,6 +4,8 @@ import android.text.TextUtils
 import androidx.lifecycle.MutableLiveData
 import com.lee.mymvvmsample.common.BaseViewModel
 import com.lee.mymvvmsample.domain.model.Image
+import com.lee.mymvvmsample.domain.model.Either
+import com.lee.mymvvmsample.domain.model.Failure
 import com.lee.mymvvmsample.domain.usecase.SearchImagesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -37,29 +39,32 @@ class HomeViewModel
         private fun searchImage(query: String, page: Int) {
             uiScope.launch {
                 _uiState.update { it.copy(isLoading = true, errorMessage = null) }
-                searchImagesUseCase(query, page)
-                    .onSuccess { result ->
-                        val images = result.images
-                        if (images.isEmpty()) {
-                            _uiState.update { state ->
-                                state.copy(isLoading = false, errorMessage = "검색 결과가 없습니다", resetList = false)
-                            }
-                        } else {
-                            _uiState.update { state ->
-                                state.copy(
-                                    isLoading = false,
-                                    imageList = state.imageList + images,
-                                    errorMessage = null,
-                                    resetList = false,
-                                )
-                            }
+                when (val result = searchImagesUseCase(query, page)) {
+                    is Either.Left -> {
+                        val failure = result.value
+                        val msg = when (failure) {
+                            is Failure.NoData -> "검색 결과가 없습니다"
+                            is Failure.Network -> "네트워크 오류가 발생했습니다"
+                            is Failure.Server -> "서버 오류가 발생했습니다"
+                            is Failure.InvalidInput -> failure.message
+                            is Failure.Unknown -> failure.message ?: "알 수 없는 오류가 발생했습니다"
                         }
-                    }
-                    .onFailure {
                         _uiState.update { state ->
-                            state.copy(isLoading = false, errorMessage = "네트워크 오류가 발생했습니다", resetList = false)
+                            state.copy(isLoading = false, errorMessage = msg, resetList = false)
                         }
                     }
+                    is Either.Right -> {
+                        val images = result.value.images
+                        _uiState.update { state ->
+                            state.copy(
+                                isLoading = false,
+                                imageList = state.imageList + images,
+                                errorMessage = null,
+                                resetList = false,
+                            )
+                        }
+                    }
+                }
             }
         }
 
