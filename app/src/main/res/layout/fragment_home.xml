@@ -5,7 +5,7 @@
 
     <data>
         <variable
-            name="VM"
+            name="vm"
             type="com.lee.mymvvmsample.presentation.viewmodel.HomeViewModel" />
     </data>
 
@@ -38,8 +38,7 @@
                     android:imeOptions="actionSearch"
                     android:singleLine="true"
                     android:maxLength="25"
-                    android:hint="검색어를 입력해주세요."
-                    android:text="@={VM.etStr}"/>
+                    android:hint="검색어를 입력해주세요."/>
 
                 <Button
                     android:id="@+id/btnSearch"
@@ -49,7 +48,7 @@
                     android:layout_marginRight="20dp"
                     android:text="Search"
                     android:textColor="@color/color_black"
-                    android:onClick="@{() -> VM.onClickSearch() }"
+                    android:onClick="@{() -> vm.onClickSearch() }"
                     android:background="?attr/selectableItemBackground"/>
 
             </RelativeLayout>

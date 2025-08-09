@@ -1,6 +1,6 @@
 package com.lee.mymvvmsample.data.repository
 
-import com.lee.mymvvmsample.common.utils.Constants
+import com.lee.mymvvmsample.BuildConfig
 import com.lee.mymvvmsample.data.mapper.ImageMapper
 import com.lee.mymvvmsample.data.network.ImageApiService
 import com.lee.mymvvmsample.domain.model.ImageSearchResult
@@ -23,7 +23,7 @@ class ImageRepositoryImpl
             return try {
                 val response =
                     apiService.searchImage(
-                        key = Constants.PIXABAY_KEY,
+                        key = BuildConfig.PIXABAY_KEY,
                         q = query,
                         imageType = "photo",
                         page = page,

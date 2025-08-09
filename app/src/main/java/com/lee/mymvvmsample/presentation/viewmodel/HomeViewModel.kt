@@ -3,11 +3,14 @@ package com.lee.mymvvmsample.presentation.viewmodel
 import android.text.TextUtils
 import androidx.lifecycle.MutableLiveData
 import com.lee.mymvvmsample.common.BaseViewModel
-import com.lee.mymvvmsample.common.utils.SingleLiveEvent
 import com.lee.mymvvmsample.domain.model.Image
 import com.lee.mymvvmsample.domain.usecase.SearchImagesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 @HiltViewModel
@@ -16,47 +19,47 @@ class HomeViewModel
     constructor(
         private val searchImagesUseCase: SearchImagesUseCase,
     ) : BaseViewModel() {
-        sealed class SearchResult {
-            object Success : SearchResult()
+        data class UiState(
+            val query: String = "",
+            val page: Int = 1,
+            val isLoading: Boolean = false,
+            val imageList: List<Image> = emptyList(),
+            val errorMessage: String? = null,
+            val resetList: Boolean = false,
+        )
 
-            class Fail(val errorMsg: String) : SearchResult()
-
-            object NetworkError : SearchResult()
-        }
-
-        val searchResultEvent = SingleLiveEvent<SearchResult>()
-
-        var etStr: String = ""
-        var page: Int = 1
-
-        var imageList: MutableList<Image> = mutableListOf()
-
-        var resetList =
-            MutableLiveData<Boolean>().apply {
-                value = false
-            }
+        private val _uiState = MutableStateFlow(UiState())
+        val uiState: StateFlow<UiState> = _uiState.asStateFlow()
 
         /**
          * 이미지 검색 api 호출.
          */
-        private fun searchImage(
-            query: String,
-            page: Int,
-        ) {
+        private fun searchImage(query: String, page: Int) {
             uiScope.launch {
-                searchImagesUseCase(query, page).fold(
-                    onSuccess = { result ->
-                        if (result.images.isEmpty()) {
-                            searchResultEvent.sendEvent(SearchResult.Fail("검색 결과가 없습니다"))
+                _uiState.update { it.copy(isLoading = true, errorMessage = null) }
+                searchImagesUseCase(query, page)
+                    .onSuccess { result ->
+                        val images = result.images
+                        if (images.isEmpty()) {
+                            _uiState.update { state ->
+                                state.copy(isLoading = false, errorMessage = "검색 결과가 없습니다", resetList = false)
+                            }
                         } else {
-                            imageList = result.images.toMutableList()
-                            searchResultEvent.sendEvent(SearchResult.Success)
+                            _uiState.update { state ->
+                                state.copy(
+                                    isLoading = false,
+                                    imageList = state.imageList + images,
+                                    errorMessage = null,
+                                    resetList = false,
+                                )
+                            }
                         }
-                    },
-                    onFailure = { exception ->
-                        searchResultEvent.sendEvent(SearchResult.NetworkError)
-                    },
-                )
+                    }
+                    .onFailure {
+                        _uiState.update { state ->
+                            state.copy(isLoading = false, errorMessage = "네트워크 오류가 발생했습니다", resetList = false)
+                        }
+                    }
             }
         }
 
@@ -64,17 +67,23 @@ class HomeViewModel
          * Search 버튼 클릭 처리.
          */
         fun onClickSearch() {
-            if (!TextUtils.isEmpty(etStr)) {
-                page = 1
-                resetList.value = true
-                searchImage(etStr, page)
+            val query = _uiState.value.query
+            if (!TextUtils.isEmpty(query)) {
+                _uiState.update { it.copy(page = 1, imageList = emptyList(), resetList = true) }
+                searchImage(query, 1)
             }
         }
 
         fun onLoadContinue() {
-            if (!TextUtils.isEmpty(etStr)) {
-                page += 1
-                searchImage(etStr, page)
+            val query = _uiState.value.query
+            if (!TextUtils.isEmpty(query)) {
+                val nextPage = _uiState.value.page + 1
+                _uiState.update { it.copy(page = nextPage) }
+                searchImage(query, nextPage)
             }
+        }
+
+        fun onQueryChanged(text: String) {
+            _uiState.update { it.copy(query = text) }
         }
     }

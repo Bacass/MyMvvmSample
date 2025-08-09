@@ -66,6 +66,12 @@ class HomeImageAdapter(
         }
     }
 
+    fun setItems(list: List<Image>) {
+        this.itemList.clear()
+        this.itemList.addAll(list)
+        notifyDataSetChanged()
+    }
+
     fun resetList() {
         itemList.clear()
     }

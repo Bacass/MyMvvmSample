@@ -19,11 +19,13 @@ android {
     buildTypes {
         release {
             buildConfigField("String", "SERVER_HTTP_URL", "\"https://pixabay.com/\"")
+            buildConfigField("String", "PIXABAY_KEY", "\"16301886-55887e205b08ae32779ca51e7\"")
 
             buildConfigField("boolean", "SHOW_LOG", "false")   // 로그 표시
         }
         debug {
             buildConfigField("String", "SERVER_HTTP_URL", "\"https://pixabay.com/\"") // 개발도메인
+            buildConfigField("String", "PIXABAY_KEY", "\"16301886-55887e205b08ae32779ca51e7\"")
 
             buildConfigField("boolean", "SHOW_LOG", "true")   // 로그 표시
         }

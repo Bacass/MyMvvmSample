@@ -2,6 +2,7 @@ package com.lee.mymvvmsample.domain.usecase
 
 import com.lee.mymvvmsample.domain.model.ImageSearchResult
 import com.lee.mymvvmsample.domain.repository.ImageRepository
+import com.lee.mymvvmsample.domain.model.Failure
 import javax.inject.Inject
 
 class SearchImagesUseCase
