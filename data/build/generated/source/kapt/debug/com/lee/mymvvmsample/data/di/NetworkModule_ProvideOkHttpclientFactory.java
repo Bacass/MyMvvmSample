@@ -1,11 +1,13 @@
 package com.lee.mymvvmsample.data.di;
 
+import com.lee.mymvvmsample.data.local.CookieStorage;
 import dagger.internal.DaggerGenerated;
 import dagger.internal.Factory;
 import dagger.internal.Preconditions;
 import dagger.internal.QualifierMetadata;
 import dagger.internal.ScopeMetadata;
 import javax.annotation.processing.Generated;
+import javax.inject.Provider;
 import okhttp3.OkHttpClient;
 
 @ScopeMetadata
@@ -22,20 +24,23 @@ import okhttp3.OkHttpClient;
     "KotlinInternalInJava"
 })
 public final class NetworkModule_ProvideOkHttpclientFactory implements Factory<OkHttpClient> {
+  private final Provider<CookieStorage> cookieStorageProvider;
+
+  public NetworkModule_ProvideOkHttpclientFactory(Provider<CookieStorage> cookieStorageProvider) {
+    this.cookieStorageProvider = cookieStorageProvider;
+  }
+
   @Override
   public OkHttpClient get() {
-    return provideOkHttpclient();
+    return provideOkHttpclient(cookieStorageProvider.get());
   }
 
-  public static NetworkModule_ProvideOkHttpclientFactory create() {
-    return InstanceHolder.INSTANCE;
+  public static NetworkModule_ProvideOkHttpclientFactory create(
+      Provider<CookieStorage> cookieStorageProvider) {
+    return new NetworkModule_ProvideOkHttpclientFactory(cookieStorageProvider);
   }
 
-  public static OkHttpClient provideOkHttpclient() {
-    return Preconditions.checkNotNullFromProvides(NetworkModule.INSTANCE.provideOkHttpclient());
-  }
-
-  private static final class InstanceHolder {
-    private static final NetworkModule_ProvideOkHttpclientFactory INSTANCE = new NetworkModule_ProvideOkHttpclientFactory();
+  public static OkHttpClient provideOkHttpclient(CookieStorage cookieStorage) {
+    return Preconditions.checkNotNullFromProvides(NetworkModule.INSTANCE.provideOkHttpclient(cookieStorage));
   }
 }

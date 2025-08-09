@@ -5,6 +5,7 @@ import com.google.gson.JsonElement
 import com.google.gson.JsonParser
 import com.google.gson.JsonSyntaxException
 import com.lee.mymvvmsample.data.BuildConfig
+import com.lee.mymvvmsample.data.local.CookieStorage
 import com.lee.mymvvmsample.data.network.AddCookieInterceptor
 import com.lee.mymvvmsample.data.network.ImageApiService
 import com.lee.mymvvmsample.data.network.ReceivedCookieInterceptor
@@ -36,13 +37,13 @@ abstract class RepositoryModule {
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
     @Provides
-    fun provideOkHttpclient(): OkHttpClient {
+    fun provideOkHttpclient(cookieStorage: CookieStorage): OkHttpClient {
         return OkHttpClient.Builder().apply {
             connectTimeout(30, TimeUnit.SECONDS)
             writeTimeout(30, TimeUnit.SECONDS)
             readTimeout(30, TimeUnit.SECONDS)
-            addInterceptor(AddCookieInterceptor())
-            addInterceptor(ReceivedCookieInterceptor())
+            addInterceptor(AddCookieInterceptor(cookieStorage))
+            addInterceptor(ReceivedCookieInterceptor(cookieStorage))
             addInterceptor(
                 HttpLoggingInterceptor(
                     object : HttpLoggingInterceptor.Logger {
